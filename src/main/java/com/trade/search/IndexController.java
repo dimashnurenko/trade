@@ -1,14 +1,14 @@
 package com.trade.search;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpStatus.OK;
+import java.util.List;
 
-@RequestMapping("/index")
+@RestController
 public class IndexController {
 	private final IndexService indexService;
 
@@ -17,8 +17,13 @@ public class IndexController {
 		this.indexService = indexService;
 	}
 
-	@PostMapping
-	public ResponseEntity indexWebSite(@RequestParam String webUrl) {
-		return new ResponseEntity(OK);
+	@PostMapping(value = "/index")
+	public List<String> indexWebSite(@RequestParam String webUrl) {
+		return indexService.getLinks(webUrl);
+	}
+
+	@GetMapping(value = "/hello")
+	public String hello() {
+		return "hello";
 	}
 }
