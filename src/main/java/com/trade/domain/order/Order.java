@@ -1,4 +1,4 @@
-package com.trade.order;
+package com.trade.domain.order;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,14 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import static com.trade.order.Status.NEW;
+import static com.trade.domain.order.Status.NEW;
 import static javax.persistence.EnumType.STRING;
 
 @Getter
 @Setter
 @Table(name = "paid_order")
 @Entity
-public class Order {
+public final class Order {
 	@Id
 	@GeneratedValue
 	@NotNull

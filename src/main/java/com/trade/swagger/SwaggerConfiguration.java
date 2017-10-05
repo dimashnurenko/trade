@@ -16,8 +16,8 @@ public class SwaggerConfiguration {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(basePackage("com.trade.order"))
-				.paths(regex("/orders.*"))
+				.apis(basePackage("com.trade.web"))
+				.paths(regex("/api.*"))
 				.build();
 	}
 }

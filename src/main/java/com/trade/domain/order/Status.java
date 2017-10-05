@@ -1,4 +1,4 @@
-package com.trade.order;
+package com.trade.domain.order;
 
 public enum Status {
 	NEW,

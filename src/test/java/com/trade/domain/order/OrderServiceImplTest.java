@@ -1,4 +1,4 @@
-package com.trade.order;
+package com.trade.domain.order;
 
 import com.trade.common.ResourceNotFoundException;
 import org.junit.Rule;

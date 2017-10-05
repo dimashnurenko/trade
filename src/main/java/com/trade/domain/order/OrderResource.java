@@ -1,9 +1,11 @@
-package com.trade.order;
+package com.trade.domain.order;
 
+import com.trade.web.order.OrderDto;
+import com.trade.web.order.OrdersController;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 
-import static com.trade.order.Status.NEW;
+import static com.trade.domain.order.Status.NEW;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 

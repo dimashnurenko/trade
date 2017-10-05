@@ -1,10 +1,12 @@
-package com.trade.order;
+package com.trade.web.order;
 
+import com.trade.domain.order.Status;
 import lombok.Data;
 
-import static com.trade.order.Status.NEW;
+import static com.trade.domain.order.Status.NEW;
 
-@Data class OrderDto {
+@Data
+public final class OrderDto {
 	private Long id;
 	private Long userId;
 	private String link;
