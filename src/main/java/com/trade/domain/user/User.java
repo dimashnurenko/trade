@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "user")
-public class User {
+public final class User {
 	@Id
 	@GeneratedValue
 	@NotNull
