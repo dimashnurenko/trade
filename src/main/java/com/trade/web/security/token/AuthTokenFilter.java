@@ -13,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 
 import static com.trade.web.security.SecurityUtils.createSecurityToken;
 
@@ -59,8 +60,7 @@ public class AuthTokenFilter implements Filter {
 	}
 
 	private boolean isExpired(AuthToken authToken) {
-		//todo  need to add logic which checks if the token expiration date is before current date
-		return false;
+		return authToken.getExpirationDate().before(new Date());
 	}
 
 	@Override
