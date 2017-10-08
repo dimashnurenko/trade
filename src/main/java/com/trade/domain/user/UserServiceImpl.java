@@ -1,6 +1,6 @@
 package com.trade.domain.user;
 
-import com.trade.common.ResourceNotFoundException;
+import com.trade.common.exception.ResourceNotFoundException;
 import com.trade.web.user.UserDto;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;

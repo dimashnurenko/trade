@@ -1,4 +1,4 @@
-package com.trade.common;
+package com.trade.common.exception;
 
 public class ValidationException extends RuntimeException {
 	private final int code;

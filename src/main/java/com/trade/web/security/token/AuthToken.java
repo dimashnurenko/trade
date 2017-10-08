@@ -1,24 +1,21 @@
-package com.trade.domain.order;
+package com.trade.web.security.token;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import static com.trade.domain.order.Status.NEW;
-import static javax.persistence.EnumType.STRING;
+import java.util.Date;
 
 @Getter
 @Setter
-@Table(name = "paid_order")
 @Entity
-public final class Order {
+@Table(name = "auth_token")
+public class AuthToken {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -28,15 +25,10 @@ public final class Order {
 	private Long userId;
 
 	@Column
-	private String link;
+	@NotNull
+	private String token;
 
-	@Column
-	private String color;
-
-	@Column
-	private String size;
-
-	@Column
-	@Enumerated(value = STRING)
-	private Status status = NEW;
+	@Column(name = "expiration_date")
+	@NotNull
+	private Date expirationDate;
 }

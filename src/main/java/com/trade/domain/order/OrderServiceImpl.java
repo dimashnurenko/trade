@@ -1,6 +1,6 @@
 package com.trade.domain.order;
 
-import com.trade.common.ResourceNotFoundException;
+import com.trade.common.exception.ResourceNotFoundException;
 import com.trade.web.order.OrderDto;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;

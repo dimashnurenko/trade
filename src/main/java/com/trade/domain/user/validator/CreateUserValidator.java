@@ -1,7 +1,7 @@
 package com.trade.domain.user.validator;
 
 
-import com.trade.common.ValidationException;
+import com.trade.common.exception.ValidationException;
 
 import com.trade.validator.Validator;
 import com.trade.web.user.UserDto;

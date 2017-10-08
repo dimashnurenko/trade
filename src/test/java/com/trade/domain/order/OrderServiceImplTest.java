@@ -1,6 +1,6 @@
 package com.trade.domain.order;
 
-import com.trade.common.ResourceNotFoundException;
+import com.trade.common.exception.ResourceNotFoundException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

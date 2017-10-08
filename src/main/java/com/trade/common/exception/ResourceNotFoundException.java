@@ -1,4 +1,4 @@
-package com.trade.common;
+package com.trade.common.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 	public ResourceNotFoundException(Long id) {

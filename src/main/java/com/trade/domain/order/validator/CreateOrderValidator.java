@@ -1,6 +1,6 @@
 package com.trade.domain.order.validator;
 
-import com.trade.common.ValidationException;
+import com.trade.common.exception.ValidationException;
 import com.trade.domain.user.UserRepo;
 import com.trade.validator.Validator;
 import com.trade.web.order.OrderDto;

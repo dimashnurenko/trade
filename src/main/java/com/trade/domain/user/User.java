@@ -22,7 +22,6 @@ import static javax.persistence.FetchType.LAZY;
 public final class User {
 	@Id
 	@GeneratedValue
-	@NotNull
 	private Long id;
 
 	@Column
