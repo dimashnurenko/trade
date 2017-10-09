@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toList;
 
 public class SecurityUtils {
 
-	public static UsernamePasswordAuthenticationToken createSecurityToken(User user) {
+	public static UsernamePasswordAuthenticationToken createAuthentication(User user) {
 		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User(user.getName(),
 		                                                                                                                         user.getPassword(),
 		                                                                                                                         getGrantedAuthorities(user));

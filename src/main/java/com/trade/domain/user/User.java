@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 
 @Getter
 @Setter
@@ -35,6 +35,6 @@ public final class User {
 	@NotNull
 	private String password;
 
-	@OneToMany(fetch = LAZY, mappedBy = "user")
+	@OneToMany(fetch = EAGER, mappedBy = "user")
 	private List<UserRole> roles = new ArrayList<>();
 }

@@ -1,9 +1,9 @@
 package com.trade.web.security.auth;
 
-import com.trade.web.security.token.AuthTokenDto;
+import com.trade.web.security.token.AccessToken;
 
 public interface AuthenticationService {
-	AuthTokenDto authenticate(AuthUserDto dto);
+	AccessToken authenticate(AuthUserDto dto);
 
 	void logout(Long userId);
 }

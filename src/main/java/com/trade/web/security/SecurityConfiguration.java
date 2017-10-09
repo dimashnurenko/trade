@@ -1,8 +1,7 @@
 package com.trade.web.security;
 
-import com.trade.domain.user.UserRepo;
-import com.trade.web.security.token.AuthTokenFilter;
-import com.trade.web.security.token.TokenRepo;
+import com.trade.web.security.token.AccessTokenFilter;
+import com.trade.web.security.token.AccessTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +27,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private final AuthenticationEntryPoint notAuthorizedEntryPoint = (request, response, error) -> response.sendError(SC_UNAUTHORIZED, "Access Denied");
 
 	private final UserDetailsService userDetailsService;
-	private final TokenRepo tokenRepo;
-	private final UserRepo userRepo;
+	private final AccessTokenManager tokenManager;
 
 	@Autowired
-	public SecurityConfiguration(UserDetailsService userDetailsService, TokenRepo tokenRepo, UserRepo userRepo) {
+	public SecurityConfiguration(UserDetailsService userDetailsService,
+	                             AccessTokenManager tokenManager) {
 		this.userDetailsService = userDetailsService;
-		this.tokenRepo = tokenRepo;
-		this.userRepo = userRepo;
+		this.tokenManager = tokenManager;
 	}
 
 	@Override
@@ -60,15 +58,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		    .antMatchers("/login").permitAll()
 		    .antMatchers("/api/**").authenticated()
 		    .and()
-		    .addFilterBefore(authTokenFilter(), BasicAuthenticationFilter.class)
+		    .addFilterBefore(accessTokenFilter(), BasicAuthenticationFilter.class)
 		    .exceptionHandling().authenticationEntryPoint(notAuthorizedEntryPoint)
 		    .and()
 		    .csrf().disable();
 	}
 
 	@Bean
-	public AuthTokenFilter authTokenFilter() {
-		return new AuthTokenFilter(tokenRepo, userRepo);
+	public AccessTokenFilter accessTokenFilter() throws Exception {
+		return new AccessTokenFilter(tokenManager, authenticationManager());
 	}
 
 	@Bean

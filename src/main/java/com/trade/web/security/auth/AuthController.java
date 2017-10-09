@@ -1,6 +1,6 @@
 package com.trade.web.security.auth;
 
-import com.trade.web.security.token.AuthTokenDto;
+import com.trade.web.security.token.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +22,11 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "/login", consumes = APPLICATION_JSON_VALUE)
-	public AuthTokenDto authenticate(@RequestBody AuthUserDto dto) {
+	public AccessToken authenticate(@RequestBody AuthUserDto dto) {
 		return authService.authenticate(dto);
 	}
 
-	@PostMapping(value = "/logout", consumes = APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/log-out")
 	public ResponseEntity logout(@RequestParam Long userId) {
 		authService.logout(userId);
 		return status(OK).build();
