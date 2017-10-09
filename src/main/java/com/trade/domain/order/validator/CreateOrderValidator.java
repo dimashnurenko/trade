@@ -6,7 +6,7 @@ import com.trade.validator.Validator;
 import com.trade.web.order.OrderDto;
 import org.springframework.stereotype.Component;
 
-import static com.trade.common.errorcode.ErrorCodes.ORDER_LINK_IS_EMPTY;
+import static com.trade.common.errorcode.ErrorCodes.FIELD_REQUIRED;
 import static com.trade.common.errorcode.ErrorCodes.USER_NOT_EXISTS;
 
 @Component
@@ -21,7 +21,7 @@ public class CreateOrderValidator implements Validator<OrderDto> {
 	public void validate(OrderDto dto) {
 		String link = dto.getLink();
 		if (link == null || link.isEmpty()) {
-			throw new ValidationException(ORDER_LINK_IS_EMPTY, "Link is required");
+			throw new ValidationException(FIELD_REQUIRED, "Link is required");
 		}
 
 		Long userId = dto.getUserId();

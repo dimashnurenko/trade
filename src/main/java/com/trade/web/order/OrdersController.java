@@ -46,7 +46,7 @@ public class OrdersController {
 		return new OrderResource(orderService.findOne(id));
 	}
 
-	@PostMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity createOne(@RequestBody OrderDto dto) throws URISyntaxException {
 		long orderId = orderService.createOrder(dto);
 
