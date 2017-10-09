@@ -28,19 +28,8 @@ public class AccessTokenFilter extends BasicAuthenticationFilter {
 			return;
 		}
 		String token = request.getHeader("Authorization");
-		String userIdString = request.getHeader("UserId");
-		if (token == null || userIdString == null) {
-			throw new InvalidTokenException("The token and userId are required");
-		}
-
-		Long userId = Long.valueOf(userIdString);
-		AccessToken authToken = tokenManager.get(userId);
-		if (authToken == null) {
-			throw new InvalidTokenException("The token is invalid.");
-		}
-
-		if (!authToken.getUserId().equals(userId)) {
-			throw new InvalidTokenException("The token doesn't belong to user");
+		if (token == null || tokenManager.get(token) == null) {
+			throw new InvalidTokenException("The token is required");
 		}
 
 		chain.doFilter(request, response);

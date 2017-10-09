@@ -11,22 +11,22 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 @Component
 public class AccessTokenManager {
-	private static final Cache<Long, AccessToken> inMemoryTokens = newBuilder().concurrencyLevel(4)
-	                                                                           .expireAfterAccess(10, MINUTES)
-	                                                                           .build();
+	private static final Cache<String, AccessToken> inMemoryTokens = newBuilder().concurrencyLevel(4)
+	                                                                             .expireAfterAccess(10, MINUTES)
+	                                                                             .build();
 
-	public void invalidate(Long userId) {
-		inMemoryTokens.invalidate(userId);
+	public void invalidate(String token) {
+		inMemoryTokens.invalidate(token);
 	}
 
-	AccessToken get(Long userId) throws InvalidTokenException {
-		return inMemoryTokens.getIfPresent(userId);
+	AccessToken get(String token) throws InvalidTokenException {
+		return inMemoryTokens.getIfPresent(token);
 	}
 
 
 	public AccessToken generateToken(Long userId) {
 		AccessToken token = createToken(userId);
-		inMemoryTokens.put(userId, token);
+		inMemoryTokens.put(token.getToken(), token);
 		return token;
 	}
 
@@ -36,7 +36,7 @@ public class AccessTokenManager {
 		String token = userId + UUID.randomUUID().toString();
 		authToken.setToken(token);
 
-		inMemoryTokens.put(userId, authToken);
+		inMemoryTokens.put(token, authToken);
 
 		return authToken;
 	}

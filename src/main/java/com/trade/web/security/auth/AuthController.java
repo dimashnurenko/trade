@@ -10,9 +10,9 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -53,8 +53,9 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "/log-out")
-	public ResponseEntity logout(@RequestParam Long userId) {
-		authService.logout(userId);
+	public ResponseEntity logout(HttpServletRequest request) {
+		String token = request.getHeader("Authentication");
+		authService.logout(token);
 		return status(OK).build();
 	}
 }

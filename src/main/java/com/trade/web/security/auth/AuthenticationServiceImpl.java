@@ -50,8 +50,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public void logout(Long userId) {
-		tokenManager.invalidate(userId);
+	public void logout(String token) {
+		if (token != null) {
+			tokenManager.invalidate(token);
+		}
 		SecurityContextHolder.clearContext();
 	}
 }

@@ -5,5 +5,5 @@ import com.trade.web.security.token.AccessToken;
 public interface AuthenticationService {
 	AccessToken authenticate(AuthUserDto dto);
 
-	void logout(Long userId);
+	void logout(String token);
 }
