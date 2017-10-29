@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.created;
 
 @RestController
-@RequestMapping("/api/v1/ads")
+@RequestMapping("/api/v1/buyers/{buyerId}/ads")
 public class AdController {
 
 	private final AdService adService;
@@ -33,8 +33,8 @@ public class AdController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> create(AdDto dto) throws URISyntaxException {
-		AdEntity entity = adService.create(dto);
+	public ResponseEntity<AddResource> create(@PathVariable Long buyerId, AdDto dto) throws URISyntaxException {
+		AdEntity entity = adService.create(buyerId, dto);
 		Link selfLink = linkTo(methodOn(this.getClass()).findOne(entity.getId())).withSelfRel();
 		return created(new URI(selfLink.getHref())).body(adMapper.map(entity));
 	}
