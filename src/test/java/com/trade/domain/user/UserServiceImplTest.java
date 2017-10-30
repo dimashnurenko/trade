@@ -14,45 +14,45 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
-     private static final long USER_ID = 1L;
+	private static final long USER_ID = 1L;
 
-        @Mock
-        private UserRepo userRepo;
-        @Mock
-        private UserMapper mapper;
+	@Mock
+	private UserRepo userRepo;
+	@Mock
+	private UserMapper mapper;
 
-        @InjectMocks
-        private UserServiceImpl service;
+	@InjectMocks
+	private UserServiceImpl service;
 
-        @Rule
-        public ExpectedException exception = ExpectedException.none();
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
-        @Test
-        public void resourceNotFoundExceptionShouldBeThrownWhenUserNotFound() {
-            when(userRepo.findOne(USER_ID)).thenReturn(null);
+	@Test
+	public void resourceNotFoundExceptionShouldBeThrownWhenUserNotFound() {
+		when(userRepo.findOne(USER_ID)).thenReturn(null);
 
-            exception.expect(ResourceNotFoundException.class);
-            exception.expectMessage("Resource with id 1 not found");
+		exception.expect(ResourceNotFoundException.class);
+		exception.expectMessage("Resource with id 1 not found");
 
-            service.findOne(USER_ID);
-        }
+		service.findOne(USER_ID);
+	}
 
-        @Test
-        public void resourceNotFoundExceptionShouldBeThrownWhenResourceMapperReturnsNull() {
-            when(userRepo.findOne(USER_ID)).thenReturn(new User());
-            when(mapper.map(any(User.class))).thenReturn(null);
+	@Test
+	public void resourceNotFoundExceptionShouldBeThrownWhenResourceMapperReturnsNull() {
+		when(userRepo.findOne(USER_ID)).thenReturn(new User());
+		when(mapper.map(any(User.class))).thenReturn(null);
 
-            exception.expect(ResourceNotFoundException.class);
-            exception.expectMessage("Resource with id 1 not found");
+		exception.expect(ResourceNotFoundException.class);
+		exception.expectMessage("Resource with id 1 not found");
 
-            service.findOne(USER_ID);
-        }
+		service.findOne(USER_ID);
+	}
 
-        @Test
-        public void resourceNotFoundExceptionShouldBeThrownWhenResourceIdNull() {
-            exception.expect(ResourceNotFoundException.class);
-            exception.expectMessage("Resource id is null");
+	@Test
+	public void resourceNotFoundExceptionShouldBeThrownWhenResourceIdNull() {
+		exception.expect(ResourceNotFoundException.class);
+		exception.expectMessage("Resource id is null");
 
-            service.findOne(null);
-        }
-    }
+		service.findOne(null);
+	}
+}
