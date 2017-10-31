@@ -17,6 +17,8 @@ public class BuyerEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Column(name = "user_id")
+	private Long userId;
 	@Column
 	private String name;
 	@Column

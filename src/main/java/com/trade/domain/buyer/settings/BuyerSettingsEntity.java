@@ -29,5 +29,6 @@ public class BuyerSettingsEntity {
 	@Enumerated(value = STRING)
 	@Column(name = "currency")
 	private Currency currency;
+	@Column
 	private double percent;
 }
