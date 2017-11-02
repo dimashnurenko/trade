@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class AdController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> create(@PathVariable Long buyerId, AdDto dto) throws URISyntaxException {
+	public ResponseEntity<AddResource> create(@PathVariable Long buyerId, @RequestBody AdDto dto) throws URISyntaxException {
 		AdEntity entity = adService.create(buyerId, dto);
 		Link selfLink = linkTo(methodOn(this.getClass()).findOne(entity.getId())).withSelfRel();
 		return created(new URI(selfLink.getHref())).body(adMapper.map(entity));

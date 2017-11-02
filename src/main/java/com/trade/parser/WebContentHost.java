@@ -8,7 +8,7 @@ import static com.trade.common.errorcode.ErrorCodes.HOST_NOT_SUPPORTED;
 import static java.lang.String.format;
 
 public enum WebContentHost {
-	GAP_UK("");
+	GAP_UK("www.gap.co.uk");
 
 	private final String host;
 

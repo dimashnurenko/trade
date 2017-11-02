@@ -22,7 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.created;
 
 @RestController
-@RequestMapping(name = "/api/v1/users/{userId}/settings")
+@RequestMapping("/api/v1/users/{userId}/settings")
 public class UserSettingController {
 
 	private final UserSettingsService settingsService;
@@ -75,7 +75,7 @@ public class UserSettingController {
 			              @ApiResponse(code = 500, message = "server error")
 	              })
 	@GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<UserSettingsResource>> findSetting(@PathVariable Long buyerId, @PathVariable Long id) {
+	public ResponseEntity<List<UserSettingsResource>> findSetting(@PathVariable Long userId, @PathVariable Long id) {
 		throw new UnsupportedOperationException("not supported yet");
 	}
 }
