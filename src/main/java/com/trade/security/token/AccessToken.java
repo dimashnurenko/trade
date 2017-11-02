@@ -1,4 +1,4 @@
-package com.trade.web.security.token;
+package com.trade.security.token;
 
 import lombok.Data;
 

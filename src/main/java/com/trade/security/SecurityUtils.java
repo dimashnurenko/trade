@@ -1,4 +1,4 @@
-package com.trade.web.security;
+package com.trade.security;
 
 import com.trade.domain.user.Role;
 import com.trade.domain.user.User;

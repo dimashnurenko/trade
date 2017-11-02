@@ -1,4 +1,4 @@
-package com.trade.web.buyer;
+package com.trade.web.settings;
 
 import com.trade.common.Currency;
 import lombok.Getter;
@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class BuyerSettingsDto {
-	private Long buyerId;
+public class UserSettingsDto {
 	private BigDecimal exchangeRate;
 	private Currency currency;
 	private double percent;

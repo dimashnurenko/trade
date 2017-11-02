@@ -1,7 +1,7 @@
 package com.trade.domain.ad;
 
-import com.trade.domain.buyer.settings.BuyerSettingsEntity;
-import com.trade.domain.buyer.settings.BuyerSettingsRepo;
+import com.trade.domain.user.settings.UserSettings;
+import com.trade.domain.user.settings.UserSettingsRepo;
 import com.trade.parser.WebContentParser;
 import com.trade.parser.WebContentParserFactory;
 import com.trade.web.ad.AdDto;
@@ -14,12 +14,12 @@ import java.util.List;
 @Component
 public class AdServiceImpl implements AdService {
 
-	private final BuyerSettingsRepo buyerSettingsRepo;
+	private final UserSettingsRepo buyerSettingsRepo;
 	private final AdRepo adRepo;
 	private final WebContentParserFactory parserRegistry;
 
 	@Autowired
-	public AdServiceImpl(BuyerSettingsRepo buyerSettingsRepo, AdRepo adRepo, WebContentParserFactory parserRegistry) {
+	public AdServiceImpl(UserSettingsRepo buyerSettingsRepo, AdRepo adRepo, WebContentParserFactory parserRegistry) {
 		this.buyerSettingsRepo = buyerSettingsRepo;
 		this.adRepo = adRepo;
 		this.parserRegistry = parserRegistry;
@@ -38,9 +38,9 @@ public class AdServiceImpl implements AdService {
 	}
 
 	private BigDecimal calculatePrice(Long buyerId, BigDecimal priceWithoutPercent) {
-		List<BuyerSettingsEntity> buyerSettings = buyerSettingsRepo.findAllByBuyerId(buyerId);
+		List<UserSettings> buyerSettings = buyerSettingsRepo.findAllByUserId(buyerId);
 		//TODO think how to get settings
-		BuyerSettingsEntity settingsEntity = buyerSettings.get(0);
+		UserSettings settingsEntity = buyerSettings.get(0);
 
 		return priceWithoutPercent.add(priceWithoutPercent.multiply(new BigDecimal(settingsEntity.getPercent())));
 	}

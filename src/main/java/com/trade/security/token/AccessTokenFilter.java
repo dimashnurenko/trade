@@ -1,4 +1,4 @@
-package com.trade.web.security.token;
+package com.trade.security.token;
 
 import com.trade.common.exception.InvalidTokenException;
 import org.springframework.security.authentication.AuthenticationManager;

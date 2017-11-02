@@ -17,21 +17,20 @@ public class UserServiceWrapper implements UserService {
 		this.userValidator = userValidator;
 	}
 
-
 	@Override
-	public UserDto findOne(Long id) {
+	public User findOne(Long id) {
 		return service.findOne(id);
 	}
 
 	@Override
-	public long createUser(UserDto user) {
+	public User createUser(UserDto user) {
 		userValidator.validate(user);
 		return service.createUser(user);
 	}
 
 	@Override
-	public void updateUser(UserDto user) {
+	public User updateUser(UserDto user) {
 		userValidator.validate(user);
-		service.updateUser(user);
+		return service.updateUser(user);
 	}
 }

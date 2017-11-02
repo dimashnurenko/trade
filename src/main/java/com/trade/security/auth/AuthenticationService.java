@@ -1,6 +1,6 @@
-package com.trade.web.security.auth;
+package com.trade.security.auth;
 
-import com.trade.web.security.token.AccessToken;
+import com.trade.security.token.AccessToken;
 
 public interface AuthenticationService {
 	AccessToken authenticate(AuthUserDto dto);

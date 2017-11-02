@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import static com.trade.domain.user.Role.USER;
 import static javax.persistence.EnumType.STRING;
@@ -24,7 +23,6 @@ import static javax.persistence.FetchType.LAZY;
 public class UserRole {
 	@Id
 	@GeneratedValue
-	@NotNull
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)

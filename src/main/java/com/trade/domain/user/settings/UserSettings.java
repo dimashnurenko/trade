@@ -1,4 +1,4 @@
-package com.trade.domain.buyer.settings;
+package com.trade.domain.user.settings;
 
 import com.trade.common.Currency;
 import lombok.Getter;
@@ -17,13 +17,13 @@ import static javax.persistence.EnumType.STRING;
 @Getter
 @Setter
 @Entity
-@Table(name = "buyer_settings")
-public class BuyerSettingsEntity {
+@Table(name = "user_settings")
+public class UserSettings {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(name = "buyer_id")
-	private Long buyerId;
+	@Column(name = "user_id")
+	private Long userId;
 	@Column(name = "exchange_rate")
 	private BigDecimal exchangeRate;
 	@Enumerated(value = STRING)

@@ -1,7 +1,7 @@
-package com.trade.web.security;
+package com.trade.security;
 
-import com.trade.web.security.token.AccessTokenFilter;
-import com.trade.web.security.token.AccessTokenManager;
+import com.trade.security.token.AccessTokenFilter;
+import com.trade.security.token.AccessTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,9 +55,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		    .antMatchers("/swagger-resources/**").permitAll()
 		    .antMatchers("/swagger-resources").permitAll()
+		    .antMatchers("/swagger-ui.html").permitAll()
 		    .antMatchers("/login").permitAll()
 		    .antMatchers("/signup").permitAll()
-		    .antMatchers("/api/**").authenticated()
+//		    .antMatchers("/api/**").authenticated()
 		    .and()
 		    .addFilterBefore(accessTokenFilter(), BasicAuthenticationFilter.class)
 		    .exceptionHandling().authenticationEntryPoint(notAuthorizedEntryPoint)

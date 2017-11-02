@@ -1,11 +1,10 @@
-package com.trade.web.buyer;
+package com.trade.web.settings;
 
-import com.trade.domain.buyer.BuyerService;
-import com.trade.domain.buyer.settings.BuyerSettingsEntity;
+import com.trade.domain.user.settings.UserSettings;
+import com.trade.domain.user.settings.UserSettingsService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,20 +18,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.created;
 
 @RestController
-@RequestMapping(name = "/api/v1/buyers/{buyerId}/settings")
-public class BuyerSettingController {
+@RequestMapping(name = "/api/v1/users/{userId}/settings")
+public class UserSettingController {
 
-	private final BuyerService buyerService;
+	private final UserSettingsService settingsService;
 
 	@Autowired
-	public BuyerSettingController(BuyerService buyerService) {
-		this.buyerService = buyerService;
+	public UserSettingController(UserSettingsService settingsService) {
+		this.settingsService = settingsService;
 	}
 
 	@ApiResponses({
@@ -42,11 +39,11 @@ public class BuyerSettingController {
 			              @ApiResponse(code = 500, message = "server error")
 	              })
 	@PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<BuyerSettingsResource> createSettings(@RequestBody BuyerSettingsDto dto) throws URISyntaxException {
-		BuyerSettingsEntity entity = buyerService.create(dto);
+	public ResponseEntity<UserSettingsResource> createSettings(@PathVariable Long userId, @RequestBody UserSettingsDto dto) throws URISyntaxException {
+		UserSettings settings = settingsService.create(userId, dto);
 
-		Link link = linkTo(methodOn(BuyerSettingController.class).findSetting(entity.getBuyerId(), entity.getId())).withSelfRel();
-		return created(new URI(link.getHref())).body(new BuyerSettingsResource(entity));
+		UserSettingsResource resource = new UserSettingsResource(settings);
+		return created(new URI(resource.getLink("self").getHref())).body(resource);
 	}
 
 	@ApiResponses({
@@ -56,7 +53,7 @@ public class BuyerSettingController {
 			              @ApiResponse(code = 500, message = "server error")
 	              })
 	@PutMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<BuyerSettingsResource> updateSettings(@PathVariable Long id, @RequestBody BuyerDto dto) {
+	public ResponseEntity<UserSettingsResource> updateSettings(@PathVariable Long id, @RequestBody UserSettingsDto dto) {
 		throw new UnsupportedOperationException("not supported yet");
 	}
 
@@ -67,7 +64,7 @@ public class BuyerSettingController {
 			              @ApiResponse(code = 500, message = "server error")
 	              })
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BuyerSettingsResource>> findSettings(@PathVariable Long buyerId) {
+	public ResponseEntity<List<UserSettingsResource>> findSettings(@PathVariable Long userId) {
 		throw new UnsupportedOperationException("not supported yet");
 	}
 
@@ -78,7 +75,7 @@ public class BuyerSettingController {
 			              @ApiResponse(code = 500, message = "server error")
 	              })
 	@GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BuyerSettingsResource>> findSetting(@PathVariable Long buyerId, @PathVariable Long id) {
+	public ResponseEntity<List<UserSettingsResource>> findSetting(@PathVariable Long buyerId, @PathVariable Long id) {
 		throw new UnsupportedOperationException("not supported yet");
 	}
 }

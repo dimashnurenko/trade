@@ -5,9 +5,9 @@ import com.trade.web.user.UserDto;
 
 public interface UserService {
 
-    UserDto findOne(Long id);
+	User findOne(Long id);
 
-    long createUser(UserDto user);
+	User createUser(UserDto user);
 
-    void updateUser(UserDto user);
+	User updateUser(UserDto user);
 }

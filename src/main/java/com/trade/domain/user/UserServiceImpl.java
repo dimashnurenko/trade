@@ -6,44 +6,52 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static java.lang.String.format;
+import static java.util.Collections.singletonList;
 import static java.util.Optional.ofNullable;
 
-@Service(value = "userService")  class UserServiceImpl implements UserService {
-    private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
+@Service(value = "userService") class UserServiceImpl implements UserService {
+	private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
-    private final UserRepo userRepo;
-    private final UserMapper mapper;
+	private final UserRepo userRepo;
+	private final UserRoleRepo userRoleRepo;
+	private final UserMapper mapper;
 
-    UserServiceImpl (UserRepo userRepo, UserMapper mapper) {
-        this.userRepo = userRepo;
-        this.mapper = mapper;
-    }
+	UserServiceImpl(UserRepo userRepo, UserRoleRepo userRoleRepo, UserMapper mapper) {
+		this.userRepo = userRepo;
+		this.userRoleRepo = userRoleRepo;
+		this.mapper = mapper;
+	}
 
-    @Override
-    @Transactional (readOnly = true)
-    public UserDto findOne(Long id) {
-        return ofNullable(id).map(userRepo::findOne)
-                .map(mapper::map)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public User findOne(Long id) {
+		return ofNullable(id).map(userRepo::findOne)
+		                     .orElseThrow(() -> new ResourceNotFoundException(id));
+	}
 
-    @Override
-    @Transactional
-    public long createUser(UserDto dto) {
-        Long userId = saveOrUpdate(dto);
-        LOG.debug(String.format("User with id: %s created.", userId));
-        return userId;
-    }
+	@Override
+	@Transactional
+	public User createUser(UserDto dto) {
+		User user = userRepo.save(mapper.map(dto));
 
-    @Override
-    @Transactional
-    public void updateUser(UserDto dto) {
-        Long userId = saveOrUpdate(dto);
-        LOG .debug(String.format("User with id: %s updated.", userId));
-    }
+		UserRole role = new UserRole();
+		role.setRole(dto.getRole());
+		role.setUser(user);
 
-    private long saveOrUpdate(UserDto dto) {
-        User user  = userRepo.save(mapper.map(dto));
-        return user.getId();
-    }
+		user.setRoles(singletonList(role));
+
+		userRoleRepo.save(role);
+
+		LOG.debug(format("User with id: %s and role: %s created.", user.getId(), dto.getRole()));
+		return user;
+	}
+
+	@Override
+	@Transactional
+	public User updateUser(UserDto dto) {
+		User user = userRepo.save(mapper.map(dto));
+		LOG.debug(format("User with id: %s updated.", user.getId()));
+		return user;
+	}
 }

@@ -1,12 +1,14 @@
-package com.trade.web.security.auth;
+package com.trade.security.auth;
 
+import com.trade.domain.user.User;
+import com.trade.domain.user.UserResource;
 import com.trade.domain.user.UserService;
-import com.trade.web.security.token.AccessToken;
+import com.trade.security.token.AccessToken;
 import com.trade.web.user.UserDto;
 import com.trade.web.user.UsersController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,15 +43,14 @@ public class AuthController {
 	}
 
 	@PostMapping(value = "/signup", consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity createOne(@RequestBody UserDto dto) throws URISyntaxException {
-		long userId = userService.createUser(dto);
+	public ResponseEntity<UserResource> createOne(@RequestBody UserDto dto) throws URISyntaxException {
+		User user = userService.createUser(dto);
 
-		ResourceSupport resourceSupport = new ResourceSupport();
-		resourceSupport.add(linkTo(methodOn(UsersController.class).findOne(userId)).withSelfRel());
+		Link link = linkTo(methodOn(UsersController.class).findOne(user.getId())).withSelfRel();
 
 		return status(CREATED)
-				.location(new URI(resourceSupport.getLink("self").getHref()))
-				.build();
+				.location(new URI(link.getHref()))
+				.body(new UserResource(user));
 	}
 
 	@PostMapping(value = "/log-out")

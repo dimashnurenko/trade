@@ -1,4 +1,4 @@
-package com.trade.web.security.auth;
+package com.trade.security.auth;
 
 import lombok.Data;
 

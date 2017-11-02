@@ -1,18 +1,18 @@
-package com.trade.web.security.auth;
+package com.trade.security.auth;
 
 import com.trade.common.exception.InvalidCredentialsException;
 import com.trade.common.exception.UserNotAuthenticatedException;
 import com.trade.domain.user.User;
 import com.trade.domain.user.UserRepo;
-import com.trade.web.security.token.AccessToken;
-import com.trade.web.security.token.AccessTokenManager;
+import com.trade.security.token.AccessToken;
+import com.trade.security.token.AccessTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.trade.web.security.SecurityUtils.createAuthentication;
+import static com.trade.security.SecurityUtils.createAuthentication;
 import static java.lang.String.format;
 
 @Component
