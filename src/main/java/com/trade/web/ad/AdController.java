@@ -1,6 +1,7 @@
 package com.trade.web.ad;
 
 import com.trade.domain.ad.AdEntity;
+import com.trade.domain.ad.AdMapper;
 import com.trade.domain.ad.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -21,7 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.created;
 
 @RestController
-@RequestMapping("/api/v1/buyers/{buyerId}/ads")
+@RequestMapping("/api/v1/groups/{groupId}/ads")
 public class AdController {
 
 	private final AdService adService;
@@ -34,14 +35,25 @@ public class AdController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> create(@PathVariable Long buyerId, @RequestBody AdDto dto) throws URISyntaxException {
-		AdEntity entity = adService.create(buyerId, dto);
-		Link selfLink = linkTo(methodOn(this.getClass()).findOne(entity.getId())).withSelfRel();
-		return created(new URI(selfLink.getHref())).body(adMapper.map(entity));
+	public ResponseEntity<AddResource> create(@PathVariable Long groupId, @RequestBody AdDto dto) throws URISyntaxException {
+		AdEntity entity = adService.create(groupId, dto);
+		Link selfLink = linkTo(methodOn(this.getClass()).findOne(groupId, entity.getId())).withSelfRel();
+		return created(new URI(selfLink.getHref())).body(addLinks(adMapper.map(entity), groupId));
 	}
 
-	@GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> findOne(@PathVariable Long id) {
+	private AddResource addLinks(AddResource resource, Long groupId) {
+		resource.add(linkTo(methodOn(AdController.class).findOne(groupId, resource.getAddId())).withSelfRel());
+//		resource.add(linkTo(methodOn(GroupController.class).findOne(groupId, resource.getAddId())).withSelfRel());
+		return resource;
+	}
+
+	@GetMapping(path = "/{adId}", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<AddResource> findOne(@PathVariable Long groupId, @PathVariable Long adId) {
+		throw new UnsupportedOperationException("not supported yet");
+	}
+
+	@GetMapping(produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<AddResource> findByGroupId(@PathVariable Long groupId) {
 		return ResponseEntity.ok().build();
 	}
 }

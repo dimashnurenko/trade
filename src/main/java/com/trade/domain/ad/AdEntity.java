@@ -18,8 +18,8 @@ public class AdEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(name = "buyer_id")
-	private Long buyerId;
+	@Column(name = "group_id")
+	private Long groupId;
 	@Column
 	private String link;
 	@Column
