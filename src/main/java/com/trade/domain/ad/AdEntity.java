@@ -5,10 +5,13 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+
+import static javax.persistence.EnumType.STRING;
 
 @Getter
 @Setter
@@ -28,4 +31,7 @@ public class AdEntity {
 	private BigDecimal price;
 	@Column(name = "image_url")
 	private String imageUrl;
+	@Enumerated(value = STRING)
+	@Column(name = "status")
+	private AdStatus status;
 }

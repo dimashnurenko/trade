@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		    .antMatchers("/swagger-ui.html").permitAll()
 		    .antMatchers("/login").permitAll()
 		    .antMatchers("/signup").permitAll()
-//		    .antMatchers("/api/**").authenticated()
+		    .antMatchers("/api/**").authenticated()
 		    .and()
 		    .addFilterBefore(accessTokenFilter(), BasicAuthenticationFilter.class)
 		    .exceptionHandling().authenticationEntryPoint(notAuthorizedEntryPoint)
