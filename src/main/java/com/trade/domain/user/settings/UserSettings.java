@@ -1,8 +1,6 @@
 package com.trade.domain.user.settings;
 
 import com.trade.common.Currency;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +12,6 @@ import java.math.BigDecimal;
 
 import static javax.persistence.EnumType.STRING;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_settings")
 public class UserSettings {
@@ -31,4 +27,44 @@ public class UserSettings {
 	private Currency currency;
 	@Column
 	private double percent;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public BigDecimal getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(BigDecimal exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+
+	public double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(double percent) {
+		this.percent = percent;
+	}
 }

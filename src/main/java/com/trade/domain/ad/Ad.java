@@ -1,8 +1,5 @@
 package com.trade.domain.ad;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -13,8 +10,6 @@ import java.math.BigDecimal;
 
 import static javax.persistence.EnumType.STRING;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "ad")
 public class Ad {
@@ -34,4 +29,60 @@ public class Ad {
 	@Enumerated(value = STRING)
 	@Column(name = "status")
 	private AdStatus status;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public AdStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AdStatus status) {
+		this.status = status;
+	}
 }

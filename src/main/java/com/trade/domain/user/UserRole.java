@@ -1,8 +1,5 @@
 package com.trade.domain.user;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -16,8 +13,6 @@ import static com.trade.domain.user.Role.USER;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user_role")
 public class UserRole {
@@ -32,4 +27,28 @@ public class UserRole {
 	@Column
 	@Enumerated(value = STRING)
 	private Role role = USER;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 }

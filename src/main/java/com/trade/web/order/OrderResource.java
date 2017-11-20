@@ -4,8 +4,6 @@ import com.trade.domain.order.Order;
 import com.trade.domain.order.Status;
 import com.trade.web.ad.AdController;
 import com.trade.web.group.GroupController;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
@@ -13,8 +11,6 @@ import java.math.BigDecimal;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-@Getter
-@Setter
 public class OrderResource extends ResourceSupport {
 	private String customerName;
 	private String adTitle;
@@ -30,5 +26,21 @@ public class OrderResource extends ResourceSupport {
 		add(linkTo(methodOn(OrderController.class).findOne(order.getOrderId())).withSelfRel());
 		add(linkTo(methodOn(AdController.class).findOne(order.getAdId())).withRel("ad"));
 		add(linkTo(methodOn(GroupController.class).findOne(order.getGroupId())).withRel("group"));
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public String getAdTitle() {
+		return adTitle;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public Status getStatus() {
+		return status;
 	}
 }

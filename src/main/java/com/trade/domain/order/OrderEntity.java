@@ -1,7 +1,5 @@
 package com.trade.domain.order;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
@@ -17,8 +15,6 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "paid_order")
-@Getter
-@Setter
 public class OrderEntity {
 	@Id
 	@GeneratedValue
@@ -36,4 +32,52 @@ public class OrderEntity {
 	@Enumerated(STRING)
 	@Column
 	private Status status;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Long getUpdaterId() {
+		return updaterId;
+	}
+
+	public void setUpdaterId(Long updaterId) {
+		this.updaterId = updaterId;
+	}
+
+	public Long getAdId() {
+		return adId;
+	}
+
+	public void setAdId(Long adId) {
+		this.adId = adId;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }

@@ -1,8 +1,5 @@
 package com.trade.domain.user;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +12,6 @@ import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "user")
 public final class User {
@@ -37,4 +32,44 @@ public final class User {
 
 	@OneToMany(fetch = EAGER, mappedBy = "user")
 	private List<UserRole> roles = new ArrayList<>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
+	}
 }
