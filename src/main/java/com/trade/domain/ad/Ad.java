@@ -17,7 +17,7 @@ import static javax.persistence.EnumType.STRING;
 @Setter
 @Entity
 @Table(name = "ad")
-public class AdEntity {
+public class Ad {
 	@Id
 	@GeneratedValue
 	private Long id;

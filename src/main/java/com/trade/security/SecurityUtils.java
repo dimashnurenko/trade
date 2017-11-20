@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.toList;
 public class SecurityUtils {
 
 	public static UsernamePasswordAuthenticationToken createAuthentication(User user) {
-		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User(user.getName(),
+		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User(user.getPhone(),
 		                                                                                                                         user.getPassword(),
 		                                                                                                                         getGrantedAuthorities(user));
 		return new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), securityUser.getAuthorities());

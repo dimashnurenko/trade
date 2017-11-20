@@ -1,6 +1,6 @@
 package com.trade.ws;
 
-import com.trade.domain.ad.AdEntity;
+import com.trade.domain.ad.Ad;
 import com.trade.domain.ad.AdMapper;
 import com.trade.domain.ad.AdRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class AdPublisher {
 
 	@Transactional
 	public void publish(Long adId) {
-		AdEntity adEntity = repo.findOne(adId);
+		Ad adEntity = repo.findOne(adId);
 		AdMessage adMessage = mapper.mapToMessage(adEntity);
 
 		broker.convertAndSend("/ws-broker/ad-publishing", adMessage);

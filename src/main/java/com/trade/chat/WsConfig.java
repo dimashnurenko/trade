@@ -12,7 +12,7 @@ public class WsConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/ws-broker");
+		config.enableSimpleBroker("/ws-channel");
 		config.setApplicationDestinationPrefixes("/app");
 	}
 

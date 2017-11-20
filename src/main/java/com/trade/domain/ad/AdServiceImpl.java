@@ -30,10 +30,10 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public AdEntity create(Long groupId, AdDto dto) {
+	public Ad create(Long groupId, AdDto dto) {
 		WebContentParser contentParser = parserRegistry.createParser(dto.getLink());
 
-		AdEntity entity = new AdEntity();
+		Ad entity = new Ad();
 		entity.setGroupId(groupId);
 		entity.setImageUrl(contentParser.getImageUrl());
 		entity.setLink(dto.getLink());

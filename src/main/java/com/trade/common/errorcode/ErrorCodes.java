@@ -8,4 +8,6 @@ public interface ErrorCodes {
 	int PARSER_ERROR = 2_002;
 
 	int INTERNAL_SERVER_ERROR = 3_000;
+
+	int SECURITY_ERROR = 4_000;
 }

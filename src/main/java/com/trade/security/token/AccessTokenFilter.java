@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AccessTokenFilter extends BasicAuthenticationFilter {
+	public static final String AUTHORIZATION_HEADER = "Authorization";
+
 	private final AccessTokenManager tokenManager;
 
 	public AccessTokenFilter(AccessTokenManager tokenManager, AuthenticationManager authenticationManager) {
@@ -27,7 +29,7 @@ public class AccessTokenFilter extends BasicAuthenticationFilter {
 			chain.doFilter(request, response);
 			return;
 		}
-		String token = request.getHeader("Authorization");
+		String token = request.getHeader(AUTHORIZATION_HEADER);
 		if (token == null || tokenManager.get(token) == null) {
 			throw new InvalidTokenException("The token is required");
 		}

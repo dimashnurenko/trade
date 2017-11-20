@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AdMapper {
 	@Mapping(source = "id", target = "addId")
-	AddResource map(AdEntity entity);
+	AddResource map(Ad entity);
 
-	AdMessage mapToMessage(AdEntity entity);
+	AdMessage mapToMessage(Ad entity);
 }

@@ -19,7 +19,7 @@ public class AccessTokenManager {
 		inMemoryTokens.invalidate(token);
 	}
 
-	AccessToken get(String token) throws InvalidTokenException {
+	public AccessToken get(String token) throws InvalidTokenException {
 		return inMemoryTokens.getIfPresent(token);
 	}
 

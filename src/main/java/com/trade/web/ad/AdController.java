@@ -1,8 +1,9 @@
 package com.trade.web.ad;
 
-import com.trade.domain.ad.AdEntity;
+import com.trade.domain.ad.Ad;
 import com.trade.domain.ad.AdMapper;
 import com.trade.domain.ad.AdService;
+import com.trade.web.group.GroupController;
 import com.trade.ws.AdPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -24,7 +26,7 @@ import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/api/v1/groups/{groupId}/ads")
+@RequestMapping("/api/v1/ads")
 public class AdController {
 
 	private final AdService adService;
@@ -39,20 +41,20 @@ public class AdController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> create(@PathVariable Long groupId, @RequestBody AdDto dto) throws URISyntaxException {
-		AdEntity entity = adService.create(groupId, dto);
-		Link selfLink = linkTo(methodOn(this.getClass()).findOne(groupId, entity.getId())).withSelfRel();
+	public ResponseEntity<AddResource> create(@RequestParam Long groupId, @RequestBody AdDto dto) throws URISyntaxException {
+		Ad entity = adService.create(groupId, dto);
+		Link selfLink = linkTo(methodOn(this.getClass()).findOne(groupId)).withSelfRel();
 		return created(new URI(selfLink.getHref())).body(addLinks(adMapper.map(entity), groupId));
 	}
 
 	private AddResource addLinks(AddResource resource, Long groupId) {
-		resource.add(linkTo(methodOn(AdController.class).findOne(groupId, resource.getAddId())).withSelfRel());
-//		resource.add(linkTo(methodOn(GroupController.class).findOne(groupId, resource.get())).withSelfRel());
+		resource.add(linkTo(methodOn(AdController.class).findOne(groupId)).withSelfRel());
+		resource.add(linkTo(methodOn(GroupController.class).findOne(groupId)).withRel("group"));
 		return resource;
 	}
 
 	@GetMapping(path = "/{adId}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> findOne(@PathVariable Long groupId, @PathVariable Long adId) {
+	public ResponseEntity<AddResource> findOne(@PathVariable Long adId) {
 		throw new UnsupportedOperationException("not supported yet");
 	}
 
