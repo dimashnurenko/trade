@@ -1,5 +1,6 @@
 package com.trade.web.user;
 
+import com.trade.domain.user.User;
 import com.trade.domain.user.UserResource;
 import com.trade.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,9 +19,9 @@ import java.net.URISyntaxException;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.ResponseEntity.status;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -36,17 +37,17 @@ public class UsersController {
 		UserResource resource = new UserResource(userService.createUser(dto));
 
 		Link link = linkTo(methodOn(UsersController.class).findOne(resource.getUserId())).withSelfRel();
-		return ResponseEntity.created(new URI(link.getHref())).body(resource);
+		return created(new URI(link.getHref())).body(resource);
 	}
 
 	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-	public UserResource findOne(@PathVariable(value = "id") Long id) {
-		return new UserResource(userService.findOne(id));
+	public ResponseEntity<UserResource> findOne(@PathVariable Long id) {
+		return ok(new UserResource(userService.findOne(id)));
 	}
 
-	@PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity updateOne(@RequestBody UserDto dto) {
-		userService.updateUser(dto);
-		return status(NO_CONTENT).build();
+		User user = userService.updateUser(dto);
+		return ok(new UserResource(user));
 	}
 }

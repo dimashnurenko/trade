@@ -1,7 +1,7 @@
 package com.trade.domain.ad;
 
 import com.trade.web.ad.AddResource;
-import com.trade.ws.AdMessage;
+import com.trade.domain.chat.AdMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

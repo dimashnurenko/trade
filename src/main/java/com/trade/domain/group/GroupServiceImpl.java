@@ -2,7 +2,9 @@ package com.trade.domain.group;
 
 import com.trade.web.group.GroupDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -16,9 +18,10 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+	@Transactional
 	public Group create(Long userId, GroupDto dto) {
 		Group group = groupMapper.map(dto);
-		group.setUserId(userId);
+		group.setCreatorId(userId);
 		return groupRepo.save(group);
 	}
 }

@@ -1,4 +1,4 @@
-package com.trade.ws;
+package com.trade.domain.chat;
 
 import java.math.BigDecimal;
 

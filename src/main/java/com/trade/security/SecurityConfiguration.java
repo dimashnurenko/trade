@@ -22,7 +22,7 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private final AuthenticationEntryPoint notAuthorizedEntryPoint = (request, response, error) -> response.sendError(SC_UNAUTHORIZED, "Access Denied");
 

@@ -4,7 +4,8 @@ import com.trade.domain.ad.Ad;
 import com.trade.domain.ad.AdMapper;
 import com.trade.domain.ad.AdService;
 import com.trade.web.group.GroupController;
-import com.trade.ws.AdPublisher;
+import com.trade.web.user.LoggedUser;
+import com.trade.domain.chat.AdPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
@@ -41,14 +42,19 @@ public class AdController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> create(@RequestParam Long groupId, @RequestBody AdDto dto) throws URISyntaxException {
-		Ad entity = adService.create(groupId, dto);
+	public ResponseEntity<AddResource> create(@RequestParam Long groupId,
+	                                          @RequestBody AdDto dto,
+	                                          LoggedUser loggedUser) throws URISyntaxException {
+		Ad entity = adService.create(groupId, loggedUser.getId(), dto);
 		Link selfLink = linkTo(methodOn(this.getClass()).findOne(groupId)).withSelfRel();
 		return created(new URI(selfLink.getHref())).body(addLinks(adMapper.map(entity), groupId));
 	}
 
 	private AddResource addLinks(AddResource resource, Long groupId) {
-		resource.add(linkTo(methodOn(AdController.class).findOne(groupId)).withSelfRel());
+		Long addId = resource.getAddId();
+		resource.add(linkTo(methodOn(AdController.class).findOne(addId)).withSelfRel());
+		resource.add(linkTo(methodOn(AdController.class).publish(addId)).withRel("publish"));
+		resource.add(linkTo(methodOn(AdController.class).findByGroupId(groupId)).withRel("group_ads"));
 		resource.add(linkTo(methodOn(GroupController.class).findOne(groupId)).withRel("group"));
 		return resource;
 	}
@@ -59,7 +65,7 @@ public class AdController {
 	}
 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<AddResource> findByGroupId(@PathVariable Long groupId) {
+	public ResponseEntity<AddResource> findByGroupId(@RequestParam Long groupId) {
 		return ok().build();
 	}
 

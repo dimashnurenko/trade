@@ -1,6 +1,6 @@
 package com.trade.web.chat;
 
-import com.trade.ws.AdMessage;
+import com.trade.domain.chat.AdMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;

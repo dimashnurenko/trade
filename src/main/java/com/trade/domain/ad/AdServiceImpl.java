@@ -8,10 +8,7 @@ import com.trade.web.ad.AdDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
-import static java.math.BigDecimal.valueOf;
-import static java.math.RoundingMode.HALF_UP;
+import static com.trade.domain.ad.AdPriceCalculator.calculatePrice;
 
 @Component
 public class AdServiceImpl implements AdService {
@@ -30,21 +27,16 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public Ad create(Long groupId, AdDto dto) {
+	public Ad create(Long groupId, Long userId, AdDto dto) {
 		WebContentParser contentParser = parserRegistry.createParser(dto.getLink());
 
 		Ad entity = new Ad();
 		entity.setGroupId(groupId);
+		entity.setCreatorId(userId);
 		entity.setImageUrl(contentParser.getImageUrl());
 		entity.setLink(dto.getLink());
 		entity.setTitle(contentParser.getTitle());
 		entity.setPrice(calculatePrice(dto, contentParser.getPrice()));
 		return adRepo.save(entity);
-	}
-
-	private BigDecimal calculatePrice(AdDto dto, BigDecimal priceWithoutPercent) {
-		BigDecimal priceInUAH = priceWithoutPercent.multiply(dto.getExchangeRate());
-		return priceInUAH.add(priceInUAH.multiply(valueOf(dto.getPercent())))
-		                 .setScale(2, HALF_UP);
 	}
 }

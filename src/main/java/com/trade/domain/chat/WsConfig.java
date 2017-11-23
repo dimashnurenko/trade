@@ -1,4 +1,4 @@
-package com.trade.chat;
+package com.trade.domain.chat;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

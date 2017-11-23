@@ -1,4 +1,4 @@
-package com.trade.ws;
+package com.trade.domain.chat;
 
 import com.trade.domain.ad.Ad;
 import com.trade.domain.ad.AdMapper;

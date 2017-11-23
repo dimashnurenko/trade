@@ -18,6 +18,8 @@ public class Ad {
 	private Long id;
 	@Column(name = "group_id")
 	private Long groupId;
+	@Column(name = "creator_id")
+	private Long creatorId;
 	@Column
 	private String link;
 	@Column
@@ -44,6 +46,14 @@ public class Ad {
 
 	public void setGroupId(Long groupId) {
 		this.groupId = groupId;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public String getLink() {

@@ -4,8 +4,10 @@ import com.trade.domain.group.Group;
 import com.trade.domain.group.GroupMapper;
 import com.trade.domain.group.GroupService;
 import com.trade.web.ad.AdController;
+import com.trade.web.user.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +38,8 @@ public class GroupController {
 	}
 
 	@PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-	public ResponseEntity<GroupResource> create(@RequestParam Long userId, @RequestBody GroupDto dto) throws URISyntaxException {
-		Group group = service.create(userId, dto);
+	public ResponseEntity<GroupResource> create(LoggedUser loggedUser, @RequestBody GroupDto dto) throws URISyntaxException {
+		Group group = service.create(loggedUser.getId(), dto);
 		GroupResource resource = addLinks(mapper.map(group));
 		return created(new URI(resource.getLink("self").getHref())).body(resource);
 	}

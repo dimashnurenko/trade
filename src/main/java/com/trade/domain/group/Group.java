@@ -12,8 +12,8 @@ public class Group {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(name = "user_id")
-	private Long userId;
+	@Column(name = "creator_id")
+	private Long creatorId;
 	@Column
 	private String name;
 
@@ -25,12 +25,12 @@ public class Group {
 		this.id = id;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public Long getCreatorId() {
+		return creatorId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public String getName() {
