@@ -29,7 +29,7 @@ public class AdPublisher {
 		Ad adEntity = repo.findOne(adId);
 		AdMessage adMessage = mapper.mapToMessage(adEntity);
 
-		broker.convertAndSend("/ws-broker/ad-publishing", adMessage);
+		broker.convertAndSend("/ws-channel/ad-publishing/" + adEntity.getGroupId(), adMessage);
 
 		adEntity.setStatus(PUBLISHED);
 		repo.save(adEntity);

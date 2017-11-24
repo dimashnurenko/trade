@@ -24,7 +24,7 @@
 
         stompClient.connect({ }, function(frame) {
             // subscribe to the /topic/message endpoint
-            stompClient.subscribe("/ws-channel/ad-publishing", function(data) {
+            stompClient.subscribe("/ws-channel/ad-publishing/1", function(data) {
                 var message = data.body;
                 messageList.append("<li>" + message + "</li>");
             });
