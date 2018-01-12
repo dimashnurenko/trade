@@ -14,7 +14,7 @@ import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "user")
-public final class User {
+public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
