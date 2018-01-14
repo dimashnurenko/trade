@@ -2,7 +2,7 @@ package com.trade.security.auth;
 
 import com.trade.common.exception.InvalidCredentialsException;
 import com.trade.common.exception.UserNotAuthenticatedException;
-import com.trade.domain.user.User;
+import com.trade.domain.user.UserEntity;
 import com.trade.domain.user.UserRepo;
 import com.trade.security.token.AccessToken;
 import com.trade.security.token.AccessTokenManager;
@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Transactional
 	public AccessToken authenticate(AuthUserDto dto) {
 		String phone = dto.getPhone();
-		User user = userRepo.findFirstByPhone(phone);
+		UserEntity user = userRepo.findFirstByPhone(phone);
 		if (user == null) {
 			throw new UserNotAuthenticatedException(format("The user with phone: %s doesn't exists", phone));
 		}

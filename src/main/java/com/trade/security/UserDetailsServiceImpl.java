@@ -1,7 +1,7 @@
 package com.trade.security;
 
 import com.trade.domain.user.Role;
-import com.trade.domain.user.User;
+import com.trade.domain.user.UserEntity;
 import com.trade.domain.user.UserRepo;
 import com.trade.domain.user.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
-		User user = userRepo.findFirstByPhone(phone);
+		UserEntity user = userRepo.findFirstByPhone(phone);
 		if (user == null) {
 			throw new UsernameNotFoundException("User doesn't exists");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), getGrantedAuthorities(user));
 	}
 
-	private Collection<? extends GrantedAuthority> getGrantedAuthorities(User user) {
+	private Collection<? extends GrantedAuthority> getGrantedAuthorities(UserEntity user) {
 		return user.getRoles()
 		           .stream()
 		           .map(UserRole::getRole)

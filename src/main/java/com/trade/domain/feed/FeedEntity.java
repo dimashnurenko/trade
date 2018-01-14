@@ -1,4 +1,4 @@
-package com.trade.domain.chat;
+package com.trade.domain.feed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,14 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "message")
-public class Message {
+@Table(name = "feed")
+public class FeedEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	@Column
-	private String content;
+	@Column(name = "user_id")
+	private Long userId;
 
 	public Long getId() {
 		return id;
@@ -24,11 +23,11 @@ public class Message {
 		this.id = id;
 	}
 
-	public String getContent() {
-		return content;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

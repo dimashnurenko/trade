@@ -1,5 +1,6 @@
 package com.trade.common.audit;
 
+import com.trade.domain.user.UserEntity;
 import com.trade.domain.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
@@ -26,7 +27,7 @@ public class SpringSecurityAuditorAware implements AuditorAware<Long> {
 
 		String phone = ((User) authentication.getPrincipal()).getUsername();
 
-		com.trade.domain.user.User user = repo.findFirstByPhone(phone);
+		UserEntity user = repo.findFirstByPhone(phone);
 		return user == null ? null : user.getId();
 	}
 }

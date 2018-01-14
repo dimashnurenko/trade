@@ -22,7 +22,7 @@ public class UserRole {
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
-	private User user;
+	private UserEntity user;
 
 	@Column
 	@Enumerated(value = STRING)
@@ -36,11 +36,11 @@ public class UserRole {
 		this.id = id;
 	}
 
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 

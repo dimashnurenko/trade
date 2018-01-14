@@ -1,4 +1,0 @@
-ALTER TABLE ad_group
-  CHANGE COLUMN user_id creator_id BIGINT(20) NOT NULL;
-ALTER TABLE ad
-  ADD COLUMN creator_id BIGINT(20);

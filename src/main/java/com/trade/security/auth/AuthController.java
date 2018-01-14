@@ -1,13 +1,12 @@
 package com.trade.security.auth;
 
 import com.trade.domain.user.User;
-import com.trade.domain.user.UserResource;
+import com.trade.domain.user.UserDto;
 import com.trade.domain.user.UserService;
 import com.trade.security.token.AccessToken;
-import com.trade.web.user.UserDto;
+import com.trade.web.user.UserResource;
 import com.trade.web.user.UsersController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class AuthController {
 
 	@Autowired
 	public AuthController(AuthenticationService authService,
-	                      @Qualifier("userServiceWrapper") UserService userService) {
+	                      UserService userService) {
 		this.authService = authService;
 		this.userService = userService;
 	}

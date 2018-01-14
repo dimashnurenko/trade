@@ -1,7 +1,5 @@
 package com.trade.domain.user;
 
-import com.trade.web.user.UserDto;
-
 
 public interface UserService {
 

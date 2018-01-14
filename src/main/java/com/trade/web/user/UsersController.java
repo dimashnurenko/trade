@@ -1,9 +1,8 @@
 package com.trade.web.user;
 
 import com.trade.domain.user.User;
-import com.trade.domain.user.UserResource;
+import com.trade.domain.user.UserDto;
 import com.trade.domain.user.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +27,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class UsersController {
 	private final UserService userService;
 
-	public UsersController(@Qualifier("userServiceWrapper") UserService userService) {
+	public UsersController(UserService userService) {
 		this.userService = userService;
 	}
 
