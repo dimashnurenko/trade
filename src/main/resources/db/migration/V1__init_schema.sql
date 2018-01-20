@@ -1,6 +1,7 @@
 CREATE TABLE `product` (
   `id`               BIGINT(10)  NOT NULL AUTO_INCREMENT,
   `title`            VARCHAR(50),
+  `description`      VARCHAR(1000),
   `created_date`     DATETIME,
   `created_by`       BIGINT(10),
   `price`            DECIMAL(10, 2),
@@ -21,7 +22,7 @@ CREATE TABLE `user` (
 CREATE TABLE `product_image` (
   `id`         BIGINT(10)   NOT NULL AUTO_INCREMENT,
   `url`        VARCHAR(200) NOT NULL,
-  `product_id` BIGINT(10) NOT NULL,
+  `product_id` BIGINT(10)   NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -52,6 +53,7 @@ CREATE TABLE `message` (
   `updated_by`   BIGINT(10) NOT NULL,
   `created_by`   BIGINT(10) NOT NULL,
   `product_id`   BIGINT(10) NOT NULL,
+  `content`      TEXT,
   PRIMARY KEY (`id`)
 );
 
@@ -65,6 +67,7 @@ CREATE TABLE `feed_settings` (
   `id`                  BIGINT(10) NOT NULL AUTO_INCREMENT,
   `page_products_count` INT(3)     NOT NULL,
   `feed_id`             BIGINT(10) NOT NULL,
+  `primary_feed_id`     BIGINT(10) NOT NULL UNIQUE,
   PRIMARY KEY (`id`)
 );
 

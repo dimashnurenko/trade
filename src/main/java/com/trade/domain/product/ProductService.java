@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ProductService {
 
-	Product createProduct(ProductDto dto, Long feedId);
+	Product createProduct(ProductDto dto, Long feedId, Long userId);
 
 	List<Product> findAllByFeedId(Long feedId);
 

@@ -1,5 +1,7 @@
 package com.trade.web.config;
 
+import com.trade.common.exception.InvalidTokenException;
+import com.trade.common.exception.UserNotAuthenticatedException;
 import com.trade.security.token.AccessToken;
 import com.trade.security.token.AccessTokenManager;
 import com.trade.web.user.LoggedUser;
@@ -31,12 +33,12 @@ public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 	                              WebDataBinderFactory binderFactory) throws Exception {
 		String token = webRequest.getHeader(AUTHORIZATION_HEADER);
 		if (token == null) {
-			return null;
+			throw new UserNotAuthenticatedException("The auth header not found.");
 		}
 
 		AccessToken accessToken = tokenManager.get(token);
 		if (accessToken == null) {
-			return null;
+			throw new InvalidTokenException("Token invalid or expired");
 		}
 
 		return new LoggedUser(accessToken.getUserId());

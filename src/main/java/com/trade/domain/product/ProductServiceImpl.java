@@ -1,12 +1,17 @@
 package com.trade.domain.product;
 
 import com.trade.common.exception.ResourceNotFoundException;
+import com.trade.common.exception.ServerException;
+import com.trade.domain.feed.FeedEntity;
 import com.trade.domain.feed.FeedRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -23,18 +28,26 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public Product createProduct(ProductDto dto, Long feedId) {
-		if (feedRepo.exists(feedId)) {
-			ProductEntity entity = productMapper.toEntity(dto);
-			entity.setFeedId(feedId);
-			return productMapper.toModel(productRepo.save(entity));
+	public Product createProduct(ProductDto dto, Long feedId, Long userId) {
+		FeedEntity feedEntity = feedRepo.findOne(feedId);
+		if (feedEntity == null) {
+			throw new ResourceNotFoundException(feedId, "Feed");
 		}
-		throw new ResourceNotFoundException(feedId, "feed");
+
+		if (!userId.equals(feedEntity.getUserId())) {
+			throw new ServerException(format("The feed %s doesn't belong to user %s", feedId, userId));
+		}
+
+		ProductEntity entity = productMapper.toEntity(dto);
+		entity.setFeedId(feedId);
+		return productMapper.toModel(productRepo.save(entity));
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Product> findAllByFeedId(Long feedId) {
-		return null;
+		List<ProductEntity> entities = productRepo.findAllByFeedId(feedId);
+		return entities.stream().map(productMapper::toModel).collect(toList());
 	}
 
 	@Override

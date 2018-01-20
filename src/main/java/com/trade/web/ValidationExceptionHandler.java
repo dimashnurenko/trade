@@ -28,7 +28,6 @@ public class ValidationExceptionHandler {
 	@ExceptionHandler(value = ServerException.class)
 	public ResponseEntity handleServerErrors(ServerException ex) {
 		Map<String, String> map = new HashMap<>();
-		map.put("code", String.valueOf(ex.getCode()));
 		map.put("reason", ex.getMessage());
 
 		return status(INTERNAL_SERVER_ERROR).body(map);
