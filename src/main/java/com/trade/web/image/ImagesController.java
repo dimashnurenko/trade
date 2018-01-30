@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +14,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
 @Controller
 @RequestMapping("/api/v1/products/{productId}/images")
-public class UploadImageController {
-	private final static Logger log = Logger.getLogger(UploadImageController.class);
+public class ImagesController {
+	private final static Logger log = Logger.getLogger(ImagesController.class);
 
 	private final ImageStorage imageStorage;
 
 	@Autowired
-	public UploadImageController(ImageStorage imageStorage) {
+	public ImagesController(ImageStorage imageStorage) {
 		this.imageStorage = imageStorage;
 	}
 
@@ -39,5 +44,17 @@ public class UploadImageController {
 		}
 
 		return ok().build();
+	}
+
+	@GetMapping(produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ImagesResource>> images(@PathVariable Long productId) {
+		List<Long> images = imageStorage.findImagesIds(productId);
+		List<ImagesResource> resources = images.stream().map(id -> new ImagesResource(id, productId)).collect(toList());
+		return ok(resources);
+	}
+
+	@GetMapping(path = "/{imageId}", produces = IMAGE_JPEG_VALUE)
+	public ResponseEntity<byte[]> image(@PathVariable Long productId, @PathVariable Long imageId) {
+		return ok(imageStorage.findImage(productId, imageId));
 	}
 }

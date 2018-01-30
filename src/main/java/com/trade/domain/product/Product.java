@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Product {
-
 	private Long id;
 	private String title;
 	private String description;

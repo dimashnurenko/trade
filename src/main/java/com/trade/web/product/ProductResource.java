@@ -1,6 +1,7 @@
 package com.trade.web.product;
 
 import com.trade.domain.product.Product;
+import com.trade.web.image.ImagesController;
 import org.springframework.hateoas.ResourceSupport;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -12,7 +13,9 @@ public class ProductResource extends ResourceSupport {
 	public ProductResource(Product product, Long feedId) {
 		this.product = product;
 
-		add(linkTo(methodOn(ProductsController.class).createProduct(null, feedId, null)).withRel("feed_products"));
+		add(linkTo(methodOn(ProductsController.class).createProduct(null, feedId, null)).withRel("feed-products"));
+		add(linkTo(methodOn(ImagesController.class).upload(product.getId(), null)).withRel("upload-image"));
+		add(linkTo(methodOn(ImagesController.class).images(product.getId())).withRel("product-images"));
 	}
 
 	public Product getProduct() {
