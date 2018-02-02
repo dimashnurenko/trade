@@ -1,8 +1,10 @@
-package com.trade.security.auth;
+package com.trade.web.auth;
 
 import com.trade.domain.user.User;
 import com.trade.domain.user.UserDto;
 import com.trade.domain.user.UserService;
+import com.trade.security.auth.AuthUserDto;
+import com.trade.security.auth.AuthenticationService;
 import com.trade.security.token.AccessToken;
 import com.trade.web.user.UserResource;
 import com.trade.web.user.UsersController;
