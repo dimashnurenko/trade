@@ -46,7 +46,7 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `message` (
+CREATE TABLE `comments` (
   `id`           BIGINT(10) NOT NULL AUTO_INCREMENT,
   `created_date` DATETIME   NOT NULL,
   `updated_date` DATETIME   NOT NULL,
@@ -54,6 +54,7 @@ CREATE TABLE `message` (
   `created_by`   BIGINT(10) NOT NULL,
   `product_id`   BIGINT(10) NOT NULL,
   `content`      TEXT,
+  `comment_id`   BIGINT(10) NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -89,13 +90,13 @@ ALTER TABLE `product_tag_mapping`
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_fk0` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `message`
+ALTER TABLE `comments`
   ADD CONSTRAINT `message_fk0` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
 
-ALTER TABLE `message`
+ALTER TABLE `comments`
   ADD CONSTRAINT `message_fk1` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`);
 
-ALTER TABLE `message`
+ALTER TABLE `comments`
   ADD CONSTRAINT `message_fk2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 ALTER TABLE `feed`

@@ -7,3 +7,11 @@ VALUES (1, 'Product title', 'description', now(), 1, 23.25, 1, 'NEW', 1);
 INSERT INTO product_image (id, url, product_id) VALUES (1, 'image-url', 1);
 INSERT INTO product_tag (id, name) VALUES (1, 'tagname');
 INSERT INTO product_tag_mapping (id, tag_id, product_id) VALUES (1, 1, 1);
+INSERT INTO comments (id, created_date, updated_date, updated_by, created_by, product_id, content, comment_id)
+VALUES (1, now(), now(), 1, 1, 1, 'content', 1);
+INSERT INTO comments (id, created_date, updated_date, updated_by, created_by, product_id, content, comment_id)
+VALUES (2, now(), now(), 1, 1, 1, 'content1_child', 1);
+INSERT INTO comments (id, created_date, updated_date, updated_by, created_by, product_id, content, comment_id)
+VALUES (3, now(), now(), 1, 1, 1, 'content2_child', 2);
+INSERT INTO comments (id, created_date, updated_date, updated_by, created_by, product_id, content, comment_id)
+VALUES (4, now(), now(), 1, 1, 1, 'content', 3);

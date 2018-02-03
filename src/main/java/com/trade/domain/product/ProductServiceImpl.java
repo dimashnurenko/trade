@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
@@ -58,7 +59,9 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public Product findById(Long id) {
-		return null;
+		return Optional.ofNullable(productRepo.findOne(id))
+		               .map(productMapper::toModel)
+		               .orElseThrow(() -> new ResourceNotFoundException(id, "product"));
 	}
 
 	@Override
