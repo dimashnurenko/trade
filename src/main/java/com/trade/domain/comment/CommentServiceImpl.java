@@ -43,10 +43,18 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	@Transactional
 	public Comment create(CommentDto dto, Long productId, Long commentId) {
 		CommentEntity commentEntity = getCommentEntity(productId, commentId);
-		commentEntity.setCommentId(commentId);
-		return toModel(commentEntity);
+
+		CommentEntity childComment = new CommentEntity();
+		childComment.setCommentId(commentEntity.getId());
+		childComment.setProductId(productId);
+		childComment.setContent(dto.getContent());
+
+		commentsRepo.save(childComment);
+
+		return toModel(childComment);
 	}
 
 	private CommentEntity getCommentEntity(Long productId, Long commentId) {
