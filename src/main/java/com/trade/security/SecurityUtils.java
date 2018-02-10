@@ -1,8 +1,6 @@
 package com.trade.security;
 
-import com.trade.domain.user.Role;
-import com.trade.domain.user.UserEntity;
-import com.trade.domain.user.UserRole;
+import com.trade.web.auth.UserInfoDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,19 +11,17 @@ import static java.util.stream.Collectors.toList;
 
 public class SecurityUtils {
 
-	public static UsernamePasswordAuthenticationToken createAuthentication(UserEntity user) {
+	public static UsernamePasswordAuthenticationToken createAuthentication(UserInfoDto user) {
 		org.springframework.security.core.userdetails.User securityUser = new org.springframework.security.core.userdetails.User(user.getPhone(),
-		                                                                                                                         user.getPassword(),
+		                                                                                                                         "",
 		                                                                                                                         getGrantedAuthorities(user));
 		return new UsernamePasswordAuthenticationToken(securityUser, securityUser.getPassword(), securityUser.getAuthorities());
 	}
 
-	private static Collection<? extends GrantedAuthority> getGrantedAuthorities(UserEntity user) {
+	private static Collection<? extends GrantedAuthority> getGrantedAuthorities(UserInfoDto user) {
 		return user.getRoles()
 		           .stream()
-		           .map(UserRole::getRole)
-		           .map(Role::toString)
-		           .map(it -> new SimpleGrantedAuthority("ROLE_" + it))
+		           .map(SimpleGrantedAuthority::new)
 		           .collect(toList());
 	}
 }

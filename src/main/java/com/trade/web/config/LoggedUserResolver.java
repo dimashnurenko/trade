@@ -1,23 +1,21 @@
 package com.trade.web.config;
 
-import com.trade.common.exception.InvalidTokenException;
-import com.trade.common.exception.UserNotAuthenticatedException;
-import com.trade.security.token.AccessToken;
-import com.trade.security.token.AccessTokenManager;
+import com.trade.security.auth.token.AuthToken;
+import com.trade.security.auth.token.AuthTokenManager;
 import com.trade.web.user.LoggedUser;
+import lombok.extern.log4j.Log4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import static com.trade.security.token.AccessTokenFilter.AUTHORIZATION_HEADER;
-
+@Log4j
 public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 
-	private final AccessTokenManager tokenManager;
+	private final AuthTokenManager tokenManager;
 
-	public LoggedUserResolver(AccessTokenManager tokenManager) {
+	LoggedUserResolver(AuthTokenManager tokenManager) {
 		this.tokenManager = tokenManager;
 	}
 
@@ -30,17 +28,19 @@ public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 	public Object resolveArgument(MethodParameter parameter,
 	                              ModelAndViewContainer mavContainer,
 	                              NativeWebRequest webRequest,
-	                              WebDataBinderFactory binderFactory) throws Exception {
-		String token = webRequest.getHeader(AUTHORIZATION_HEADER);
+	                              WebDataBinderFactory binderFactory) {
+		String token = webRequest.getHeader("Authentication");
 		if (token == null) {
-			throw new UserNotAuthenticatedException("The auth header not found.");
+			log.warn("User can't be resolved. Token not found.");
+			return null;
 		}
 
-		AccessToken accessToken = tokenManager.get(token);
-		if (accessToken == null) {
-			throw new InvalidTokenException("Token invalid or expired");
+		AuthToken authToken = tokenManager.get(token);
+		if (authToken == null) {
+			log.warn("User can't be resolved. User by token not found.");
+			return null;
 		}
 
-		return new LoggedUser(accessToken.getUserId());
+		return new LoggedUser(authToken.getUserId());
 	}
 }

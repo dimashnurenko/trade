@@ -1,30 +1,29 @@
 package com.trade.security.auth;
 
-import com.trade.common.exception.InvalidCredentialsException;
-import com.trade.common.exception.UserNotAuthenticatedException;
+import com.trade.security.exception.AuthException;
 import com.trade.domain.user.UserEntity;
 import com.trade.domain.user.UserRepo;
-import com.trade.security.token.AccessToken;
-import com.trade.security.token.AccessTokenManager;
+import com.trade.security.auth.token.AuthToken;
+import com.trade.security.auth.token.AuthTokenManager;
+import com.trade.web.auth.UserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.trade.security.SecurityUtils.createAuthentication;
-import static java.lang.String.format;
+import java.util.Optional;
 
-@Component
+@Component(value = "authServiceCustom")
 public class AuthenticationServiceImpl implements AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepo userRepo;
-	private final AccessTokenManager tokenManager;
+	private final AuthTokenManager tokenManager;
 
 	@Autowired
 	public AuthenticationServiceImpl(PasswordEncoder passwordEncoder,
 	                                 UserRepo userRepo,
-	                                 AccessTokenManager tokenManager) {
+	                                 AuthTokenManager tokenManager) {
 		this.passwordEncoder = passwordEncoder;
 		this.userRepo = userRepo;
 		this.tokenManager = tokenManager;
@@ -32,24 +31,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	@Transactional
-	public AccessToken authenticate(AuthUserDto dto) {
+	public AuthToken authenticate(AuthUserDto dto) {
 		String phone = dto.getPhone();
 		UserEntity user = userRepo.findFirstByPhone(phone);
 		if (user == null) {
-			throw new UserNotAuthenticatedException(format("The user with phone: %s doesn't exists", phone));
+			throw new AuthException("Invalid credentials");
 		}
 
 		String password = dto.getPassword();
 		if (!passwordEncoder.matches(password, user.getPassword())) {
-			throw new InvalidCredentialsException("The password is wrong.");
+			throw new AuthException("Invalid credentials");
 		}
-
-		SecurityContextHolder.getContext().setAuthentication(createAuthentication(user));
-
 		return tokenManager.generateToken(user.getId());
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public UserInfoDto authenticate(String token) {
+		return Optional.ofNullable(tokenManager.get(token))
+		               .map(AuthToken::getUserId)
+		               .map(userRepo::findOne)
+		               .map(UserInfoDto::new)
+		               .orElseThrow(() -> new AuthException("Token expired or invalid"));
+	}
+
+	@Override
+	@Transactional
 	public void logout(String token) {
 		if (token != null) {
 			tokenManager.invalidate(token);
