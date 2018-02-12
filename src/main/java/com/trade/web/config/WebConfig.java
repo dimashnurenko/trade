@@ -1,6 +1,6 @@
 package com.trade.web.config;
 
-import com.trade.security.auth.token.AuthTokenManager;
+import com.trade.domain.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +14,12 @@ import java.util.List;
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	private final AuthTokenManager tokenManager;
-
 	@Autowired
-	public WebConfig(AuthTokenManager tokenManager) {
-		this.tokenManager = tokenManager;
-	}
+	private UserRepo userRepo;
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(new LoggedUserResolver(tokenManager));
+		argumentResolvers.add(new LoggedUserResolver(userRepo));
 	}
 
 	@Bean

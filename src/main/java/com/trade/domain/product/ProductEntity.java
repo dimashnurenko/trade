@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static com.trade.domain.product.ProductStatus.NEW;
 import static javax.persistence.EnumType.STRING;
@@ -46,4 +47,7 @@ public class ProductEntity extends CreateAudit {
 
 	@Column(name = "feed_id")
 	private Long feedId;
+
+	@Column(name = "created_date")
+	private LocalDateTime createdDate;
 }

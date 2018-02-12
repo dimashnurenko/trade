@@ -4,10 +4,12 @@ import com.trade.common.exception.ResourceNotFoundException;
 import com.trade.common.exception.ServerException;
 import com.trade.domain.feed.FeedEntity;
 import com.trade.domain.feed.FeedRepo;
+import com.trade.domain.follower.FollowersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +21,17 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductRepo productRepo;
 	private final ProductMapper productMapper;
 	private final FeedRepo feedRepo;
+	private final FollowersService followersService;
 
 	@Autowired
-	public ProductServiceImpl(ProductRepo productRepo, ProductMapper productMapper, FeedRepo feedRepo) {
+	public ProductServiceImpl(ProductRepo productRepo,
+	                          ProductMapper productMapper,
+	                          FeedRepo feedRepo,
+	                          FollowersService followersService) {
 		this.productRepo = productRepo;
 		this.productMapper = productMapper;
 		this.feedRepo = feedRepo;
+		this.followersService = followersService;
 	}
 
 	@Override
@@ -46,14 +53,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Product> findAllByFeedId(Long feedId) {
-		List<ProductEntity> entities = productRepo.findAllByFeedId(feedId);
-		return entities.stream().map(productMapper::toModel).collect(toList());
-	}
+	public List<Product> findAllByUserId(Long userId) {
+		List<Long> followedUsers = followersService.findFollowersIdsByUserId(userId);
+		List<Long> userIds = new ArrayList<>();
+		userIds.add(userId);
+		userIds.addAll(followedUsers);
 
-	@Override
-	public List<Product> findAllByFeedsIds(List<Long> feedsIds) {
-		return null;
+		List<Long> feeds = feedRepo.findAllByUserIdIn(userIds).stream().map(FeedEntity::getId).collect(toList());
+		List<ProductEntity> entities = productRepo.findAllByFeedIdInOrderByCreatedDate(feeds);
+		return entities.stream().map(productMapper::toModel).collect(toList());
 	}
 
 	@Override
@@ -62,11 +70,5 @@ public class ProductServiceImpl implements ProductService {
 		return Optional.ofNullable(productRepo.findOne(id))
 		               .map(productMapper::toModel)
 		               .orElseThrow(() -> new ResourceNotFoundException(id, "product"));
-	}
-
-	@Override
-	@Transactional
-	public void delete(Long id) {
-
 	}
 }

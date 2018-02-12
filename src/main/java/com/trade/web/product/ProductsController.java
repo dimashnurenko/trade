@@ -38,8 +38,8 @@ public class ProductsController {
 	}
 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ProductResource>> findByFeedId(@PathVariable Long feedId) {
-		List<Product> products = productService.findAllByFeedId(feedId);
-		return ok(products.stream().map(it -> new ProductResource(it, feedId)).collect(toList()));
+	public ResponseEntity<List<ProductResource>> findByUserId(LoggedUser loggedUser) {
+		List<Product> products = productService.findAllByUserId(loggedUser.getId());
+		return ok(products.stream().map(it -> new ProductResource(it, loggedUser.getId())).collect(toList()));
 	}
 }

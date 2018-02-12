@@ -1,22 +1,24 @@
 package com.trade.web.config;
 
-import com.trade.security.auth.token.AuthToken;
-import com.trade.security.auth.token.AuthTokenManager;
+import com.trade.domain.user.UserEntity;
+import com.trade.domain.user.UserRepo;
+import com.trade.security.exception.AuthException;
 import com.trade.web.user.LoggedUser;
-import lombok.extern.log4j.Log4j;
 import org.springframework.core.MethodParameter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-@Log4j
 public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 
-	private final AuthTokenManager tokenManager;
+	private final UserRepo userRepo;
 
-	LoggedUserResolver(AuthTokenManager tokenManager) {
-		this.tokenManager = tokenManager;
+	public LoggedUserResolver(UserRepo userRepo) {
+		this.userRepo = userRepo;
 	}
 
 	@Override
@@ -29,18 +31,17 @@ public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 	                              ModelAndViewContainer mavContainer,
 	                              NativeWebRequest webRequest,
 	                              WebDataBinderFactory binderFactory) {
-		String token = webRequest.getHeader("Authentication");
-		if (token == null) {
-			log.warn("User can't be resolved. Token not found.");
-			return null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!authentication.isAuthenticated()) {
+			throw new AuthException("User not authorized");
 		}
 
-		AuthToken authToken = tokenManager.get(token);
-		if (authToken == null) {
-			log.warn("User can't be resolved. User by token not found.");
-			return null;
+		User principal = (User) authentication.getPrincipal();
+		UserEntity user = userRepo.findFirstByPhone(principal.getUsername());
+		if (user == null) {
+			throw new AuthException("User not authorized");
 		}
 
-		return new LoggedUser(authToken.getUserId());
+		return new LoggedUser(user.getId());
 	}
 }

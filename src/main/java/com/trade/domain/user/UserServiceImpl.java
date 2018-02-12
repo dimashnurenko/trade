@@ -48,7 +48,7 @@ import static java.util.Collections.singletonList;
 	public User createUser(UserDto dto) {
 		UserEntity user = userRepo.save(mapper.toEntity(dto));
 
-		UserRole role = createUserRole(dto.getRole());
+		UserRole role = createUserRole(dto.getRole(), user);
 		user.setRoles(singletonList(role));
 
 		User model = mapper.toModel(user);
@@ -59,9 +59,10 @@ import static java.util.Collections.singletonList;
 		return model;
 	}
 
-	private UserRole createUserRole(Role userRole) {
+	private UserRole createUserRole(Role userRole, UserEntity user) {
 		UserRole role = new UserRole();
 		role.setRole(userRole);
+		role.setUser(user);
 
 		return userRoleRepo.save(role);
 	}
