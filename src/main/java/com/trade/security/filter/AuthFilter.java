@@ -1,6 +1,7 @@
 package com.trade.security.filter;
 
 import com.trade.security.auth.AuthenticationService;
+import com.trade.security.exception.AuthException;
 import com.trade.web.auth.UserInfoDto;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.trade.security.SecurityUtils.createAuthentication;
@@ -34,9 +36,14 @@ public class AuthFilter extends GenericFilterBean {
 			return;
 		}
 
-		UserInfoDto userInfo = authService.authenticate(authentication);
-
-		SecurityContextHolder.getContext().setAuthentication(createAuthentication(userInfo));
+		try {
+			UserInfoDto userInfo = authService.authenticate(authentication);
+			SecurityContextHolder.getContext().setAuthentication(createAuthentication(userInfo));
+		} catch (AuthException e) {
+			HttpServletResponse httpResponse = (HttpServletResponse) response;
+			httpResponse.sendError(403, "Unauthorized.");
+			return;
+		}
 
 		chain.doFilter(request, response);
 	}

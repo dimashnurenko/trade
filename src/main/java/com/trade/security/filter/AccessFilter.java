@@ -1,6 +1,5 @@
 package com.trade.security.filter;
 
-import com.trade.security.exception.AccessException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -8,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AccessFilter extends GenericFilterBean {
@@ -17,7 +17,9 @@ public class AccessFilter extends GenericFilterBean {
 
 		String accessToken = httpRequest.getHeader("AccessToken");
 		if (httpRequest.getRequestURI().contains("/api/") && (accessToken == null || accessToken.isEmpty())) {
-			throw new AccessException("Access token is absent or invalid");
+			HttpServletResponse httpResponse = (HttpServletResponse) response;
+			httpResponse.sendError(401, "Access denied.");
+			return;
 		}
 
 		chain.doFilter(request, response);

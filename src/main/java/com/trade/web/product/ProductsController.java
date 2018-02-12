@@ -5,6 +5,8 @@ import com.trade.domain.product.ProductDto;
 import com.trade.domain.product.ProductService;
 import com.trade.web.user.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -38,8 +37,8 @@ public class ProductsController {
 	}
 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ProductResource>> findByUserId(LoggedUser loggedUser) {
-		List<Product> products = productService.findAllByUserId(loggedUser.getId());
-		return ok(products.stream().map(it -> new ProductResource(it, loggedUser.getId())).collect(toList()));
+	public ResponseEntity<Page<ProductResource>> findByUserId(LoggedUser loggedUser, Pageable pageable) {
+		Page<Product> products = productService.findAllByUserId(loggedUser.getId(), pageable);
+		return ok(products.map(it -> new ProductResource(it, loggedUser.getId())));
 	}
 }
