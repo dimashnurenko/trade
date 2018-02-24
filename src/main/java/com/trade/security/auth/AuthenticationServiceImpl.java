@@ -1,10 +1,10 @@
 package com.trade.security.auth;
 
-import com.trade.security.exception.AuthException;
 import com.trade.domain.user.UserEntity;
 import com.trade.domain.user.UserRepo;
 import com.trade.security.auth.token.AuthToken;
 import com.trade.security.auth.token.AuthTokenManager;
+import com.trade.security.exception.AuthException;
 import com.trade.web.auth.UserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

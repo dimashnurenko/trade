@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import java.time.ZoneId;
 
-import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
-
 @Getter
 @Setter
 public class AuthTokenDto {

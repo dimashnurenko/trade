@@ -14,7 +14,7 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var messageList = $("#messages");
 
         // defined a connection to a new socket endpoint
@@ -22,9 +22,9 @@
 
         var stompClient = Stomp.over(socket);
 
-        stompClient.connect({ }, function(frame) {
+        stompClient.connect({}, function (frame) {
             // subscribe to the /topic/message endpoint
-            stompClient.subscribe("/ws-channel/ad-publishing/1", function(data) {
+            stompClient.subscribe("/ws-channel/ad-publishing/1", function (data) {
                 var message = data.body;
                 messageList.append("<li>" + message + "</li>");
             });

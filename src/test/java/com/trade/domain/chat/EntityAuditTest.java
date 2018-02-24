@@ -11,14 +11,14 @@ import javax.persistence.EntityManagerFactory;
 //@Sql("/com/trade/domain/chat/init.sql")
 public class EntityAuditTest {
 
-//	@Autowired
+	//	@Autowired
 	private EntityManager entityManager;
-//	@Autowired
+	//	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-//	@Autowired
+	//	@Autowired
 	private AuthenticationService authenticationService;
 
-//	@Before
+	//	@Before
 	public void setUp() {
 		AuthUserDto authUserDto = new AuthUserDto();
 		authUserDto.setPassword("123456");
@@ -26,7 +26,7 @@ public class EntityAuditTest {
 		authenticationService.authenticate(authUserDto);
 	}
 
-//	@Test
+	//	@Test
 //	@Transactional
 	public void auditInformationShouldBeStoredWithEntity() {
 //		Message message = new Message();
@@ -44,7 +44,7 @@ public class EntityAuditTest {
 //		assertThat(message1.getCreatedBy(), is(equalTo(1L)));
 	}
 
-//	@Test
+	//	@Test
 //	@Transactional
 //	@Ignore
 	public void auditInformationShouldBeUpdatedDuringEntityUpdate() {

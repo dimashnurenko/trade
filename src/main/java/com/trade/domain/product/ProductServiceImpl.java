@@ -1,7 +1,9 @@
 package com.trade.domain.product;
 
+import com.google.common.eventbus.EventBus;
 import com.trade.common.exception.ResourceNotFoundException;
 import com.trade.common.exception.ServerException;
+import com.trade.domain.events.product.ProductCreatedEvent;
 import com.trade.domain.feed.FeedEntity;
 import com.trade.domain.feed.FeedRepo;
 import com.trade.domain.follower.FollowersService;
@@ -24,16 +26,19 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductMapper productMapper;
 	private final FeedRepo feedRepo;
 	private final FollowersService followersService;
+	private final EventBus eventBus;
 
 	@Autowired
 	public ProductServiceImpl(ProductRepo productRepo,
 	                          ProductMapper productMapper,
 	                          FeedRepo feedRepo,
-	                          FollowersService followersService) {
+	                          FollowersService followersService,
+	                          EventBus eventBus) {
 		this.productRepo = productRepo;
 		this.productMapper = productMapper;
 		this.feedRepo = feedRepo;
 		this.followersService = followersService;
+		this.eventBus = eventBus;
 	}
 
 	@Override
@@ -50,7 +55,13 @@ public class ProductServiceImpl implements ProductService {
 
 		ProductEntity entity = productMapper.toEntity(dto);
 		entity.setFeedId(feedId);
-		return productMapper.toModel(productRepo.save(entity));
+		Product product = productMapper.toModel(productRepo.save(entity));
+
+		eventBus.post(ProductCreatedEvent.builder()
+		                                 .productId(product.getId())
+		                                 .userId(userId)
+		                                 .build());
+		return product;
 	}
 
 	@Override
