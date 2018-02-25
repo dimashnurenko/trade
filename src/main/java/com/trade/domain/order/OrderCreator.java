@@ -17,7 +17,7 @@ public class OrderCreator {
 		this.orderRepo = orderRepo;
 	}
 
-	public Long create(CreateOrderDto dto) {
+	public Long create(CreateOrderDto dto, Long customerId) {
 		OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setProductId(dto.getProductId());
 		orderEntity.setStatus(NEW);
@@ -26,6 +26,7 @@ public class OrderCreator {
 		OrderEntity order = orderRepo.save(orderEntity);
 
 		eventBus.post(OrderCreatedEvent.builder()
+		                               .customerId(customerId)
 		                               .orderId(order.getId())
 		                               .productId(dto.getProductId())
 		                               .quantity(dto.getQuantity())

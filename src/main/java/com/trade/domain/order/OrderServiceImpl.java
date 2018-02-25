@@ -18,8 +18,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public Long create(CreateOrderDto dto) {
-		return orderCreator.create(dto);
+	public Long create(CreateOrderDto dto, Long customerId) {
+		return orderCreator.create(dto, customerId);
 	}
 
 	@Override

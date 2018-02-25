@@ -33,13 +33,13 @@ public class OrdersController {
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity makeOrder(LoggedUser loggedUser, @RequestBody CreateOrderDto dto) throws URISyntaxException {
-		Long orderId = orderService.create(dto);
+		Long orderId = orderService.create(dto, loggedUser.getId());
 
 		Link orderDetailsUrl = linkTo(methodOn(OrdersController.class).findOne(orderId, loggedUser)).withRel("order_details");
 		return created(new URI(orderDetailsUrl.getHref())).build();
 	}
 
-	@GetMapping(path = "/{orderId}",produces = APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{orderId}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrderResource> findOne(@PathVariable Long orderId, LoggedUser user) {
 		Order order = orderService.findOne(orderId);
 		return ok(new OrderResource(order));
