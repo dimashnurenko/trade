@@ -1,8 +1,5 @@
 package com.trade.domain.follower;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "followers")
 public class FollowerEntity {
@@ -24,4 +19,28 @@ public class FollowerEntity {
 	@NotNull
 	@Column(name = "followed_on")
 	private Long followedOn;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getFollowedOn() {
+		return followedOn;
+	}
+
+	public void setFollowedOn(Long followedOn) {
+		this.followedOn = followedOn;
+	}
 }

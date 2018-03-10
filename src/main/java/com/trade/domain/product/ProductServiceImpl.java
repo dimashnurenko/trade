@@ -57,10 +57,7 @@ public class ProductServiceImpl implements ProductService {
 		entity.setFeedId(feedId);
 		Product product = productMapper.toModel(productRepo.save(entity));
 
-		eventBus.post(ProductCreatedEvent.builder()
-		                                 .productId(product.getId())
-		                                 .userId(userId)
-		                                 .build());
+		eventBus.post(new ProductCreatedEvent(product.getId(), userId));
 		return product;
 	}
 

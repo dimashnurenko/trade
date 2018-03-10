@@ -1,10 +1,13 @@
 package com.trade.domain.comment;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class CommentDto {
 	private String content;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 }

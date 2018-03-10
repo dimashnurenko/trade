@@ -68,16 +68,14 @@ public class CommentServiceImpl implements CommentService {
 
 	private Comment toModel(CommentEntity entity) {
 		User user = userService.findOne(entity.getCreatedBy());
-		return Comment.builder()
-		              .id(entity.getId())
-		              .content(entity.getContent())
-		              .createdBy(user.getName())
-		              .createdDate(entity.getCreatedDate())
-		              .comments(commentsRepo.findAllByCommentId(entity.getId())
-		                                    .stream()
-		                                    .map(this::toModel)
-		                                    .collect(toList()))
-		              .build();
+		return new Comment(entity.getId(),
+		                   entity.getContent(),
+		                   user.getName(),
+		                   entity.getCreatedDate(),
+		                   commentsRepo.findAllByCommentId(entity.getId())
+		                               .stream()
+		                               .map(this::toModel)
+		                               .collect(toList()));
 	}
 
 	@Override
