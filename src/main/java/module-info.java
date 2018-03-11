@@ -1,7 +1,6 @@
 module com.trade {
 	requires spring.data.jpa;
 	requires hibernate.jpa;
-	requires kotlin.stdlib;
 	requires spring.websocket;
 	requires spring.context;
 	requires spring.messaging;
