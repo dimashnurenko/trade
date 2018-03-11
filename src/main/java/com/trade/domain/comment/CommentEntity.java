@@ -1,6 +1,8 @@
 package com.trade.domain.comment;
 
 import com.trade.common.audit.Audit;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "comments")
 @EntityListeners(AuditingEntityListener.class)
@@ -26,36 +30,4 @@ public class CommentEntity extends Audit {
 
 	@Column(name = "comment_id")
 	private Long commentId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	public Long getCommentId() {
-		return commentId;
-	}
-
-	public void setCommentId(Long commentId) {
-		this.commentId = commentId;
-	}
 }

@@ -25,7 +25,12 @@ public class OrderCreator {
 
 		OrderEntity order = orderRepo.save(orderEntity);
 
-		eventBus.post(new OrderCreatedEvent(customerId, order.getId(), dto.getProductId(), dto.getQuantity()));
+		eventBus.post(OrderCreatedEvent.builder()
+		                               .customerId(customerId)
+		                               .orderId(order.getId())
+		                               .productId(dto.getProductId())
+		                               .quantity(dto.getQuantity())
+		                               .build());
 		return order.getId();
 	}
 }
