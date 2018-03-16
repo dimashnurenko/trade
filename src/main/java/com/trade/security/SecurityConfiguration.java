@@ -1,7 +1,6 @@
 package com.trade.security;
 
 import com.trade.security.auth.AuthenticationService;
-import com.trade.security.filter.AccessFilter;
 import com.trade.security.filter.AuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -38,13 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		    .exceptionHandling().authenticationEntryPoint(notAuthorizedEntryPoint)
 		    .and()
 		    .csrf().disable();
-	}
-
-	@Bean
-	public FilterRegistrationBean accessFilter() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean(new AccessFilter());
-		registrationBean.setOrder(1);
-		return registrationBean;
 	}
 
 	@Bean

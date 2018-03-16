@@ -3,7 +3,6 @@ package com.trade.domain.product;
 import com.google.common.eventbus.EventBus;
 import com.trade.common.exception.ResourceNotFoundException;
 import com.trade.common.exception.ServerException;
-import com.trade.domain.events.product.ProductCreatedEvent;
 import com.trade.domain.feed.FeedEntity;
 import com.trade.domain.feed.FeedRepo;
 import com.trade.domain.follower.FollowersService;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.trade.domain.events.product.ProductCreatedEvent.Builder.builder;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
@@ -57,10 +57,9 @@ public class ProductServiceImpl implements ProductService {
 		entity.setFeedId(feedId);
 		Product product = productMapper.toModel(productRepo.save(entity));
 
-		eventBus.post(ProductCreatedEvent.builder()
-		                                 .productId(product.getId())
-		                                 .userId(userId)
-		                                 .build());
+		eventBus.post(builder().productId(product.getId())
+		                       .userId(userId)
+		                       .build());
 		return product;
 	}
 

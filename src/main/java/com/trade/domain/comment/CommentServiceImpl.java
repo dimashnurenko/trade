@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.trade.common.exception.ValidationErrorCodes.COMMENT_NOT_RELATED_TO_PROJECT;
+import static com.trade.domain.comment.Comment.Builder.builder;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -68,16 +69,15 @@ public class CommentServiceImpl implements CommentService {
 
 	private Comment toModel(CommentEntity entity) {
 		User user = userService.findOne(entity.getCreatedBy());
-		return Comment.builder()
-		              .id(entity.getId())
-		              .content(entity.getContent())
-		              .createdBy(user.getName())
-		              .createdDate(entity.getCreatedDate())
-		              .comments(commentsRepo.findAllByCommentId(entity.getId())
-		                                    .stream()
-		                                    .map(this::toModel)
-		                                    .collect(toList()))
-		              .build();
+		return builder().id(entity.getId())
+		                .content(entity.getContent())
+		                .createdBy(user.getName())
+		                .createdDate(entity.getCreatedDate())
+		                .comments(commentsRepo.findAllByCommentId(entity.getId())
+		                                      .stream()
+		                                      .map(this::toModel)
+		                                      .collect(toList()))
+		                .build();
 	}
 
 	@Override

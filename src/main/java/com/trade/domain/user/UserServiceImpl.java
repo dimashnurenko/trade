@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.trade.domain.user.Role.USER;
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 
@@ -48,7 +49,7 @@ import static java.util.Collections.singletonList;
 	public User createUser(UserDto dto) {
 		UserEntity user = userRepo.save(mapper.toEntity(dto));
 
-		UserRole role = createUserRole(dto.getRole(), user);
+		UserRole role = createUserRole(USER, user);
 		user.setRoles(singletonList(role));
 
 		User model = mapper.toModel(user);
