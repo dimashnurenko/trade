@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>trade</artifactId>
+        <groupId>com.trade</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.trade</groupId>
-    <artifactId>trade</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>trade</name>
+    <artifactId>core-api</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,15 +17,21 @@
         <maven.compiler.version>3.5.1</maven.compiler.version>
         <mapstruct.version>1.1.0.Final</mapstruct.version>
         <lombok.maven.plugin.version>1.16.20.0</lombok.maven.plugin.version>
+        <exceptions.support.version>0.0.1-SNAPSHOT</exceptions.support.version>
+        <auth.version>0.0.1-SNAPSHOT</auth.version>
     </properties>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
-    </parent>
-
     <dependencies>
+        <dependency>
+            <groupId>com.trade</groupId>
+            <artifactId>exceptions-support</artifactId>
+            <version>${exceptions.support.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.trade</groupId>
+            <artifactId>auth</artifactId>
+            <version>${auth.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>

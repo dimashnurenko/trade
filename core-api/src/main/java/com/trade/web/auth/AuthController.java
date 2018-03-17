@@ -51,7 +51,7 @@ public class AuthController {
 		return ResponseEntity.ok(new AuthTokenDto(authService.authenticate(dto)));
 	}
 
-	@GetMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserInfoDto> authenticate(@RequestHeader(value = "Authentication") String token) {
 		return ok(authService.authenticate(token));
 	}
