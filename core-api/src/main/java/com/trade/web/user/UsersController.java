@@ -32,7 +32,7 @@ public class UsersController {
 	}
 
 	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserResource> create(UserDto dto) throws URISyntaxException {
+	public ResponseEntity<UserResource> create(@RequestBody UserDto dto) throws URISyntaxException {
 		UserResource resource = new UserResource(userService.createUser(dto));
 
 		Link link = linkTo(methodOn(UsersController.class).findOne(resource.getUserId())).withSelfRel();
