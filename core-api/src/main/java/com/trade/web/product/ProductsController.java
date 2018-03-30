@@ -1,9 +1,9 @@
 package com.trade.web.product;
 
-import com.trade.domain.product.Product;
-import com.trade.domain.product.ProductDto;
-import com.trade.domain.product.ProductService;
-import com.trade.web.user.LoggedUser;
+import com.trade.core.domain.product.Product;
+import com.trade.core.domain.product.ProductDto;
+import com.trade.core.domain.product.ProductService;
+import com.trade.web.config.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

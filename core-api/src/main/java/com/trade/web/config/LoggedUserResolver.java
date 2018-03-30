@@ -1,9 +1,8 @@
 package com.trade.web.config;
 
-import com.trade.domain.user.UserEntity;
-import com.trade.domain.user.UserRepo;
-import com.trade.security.exception.AuthException;
-import com.trade.web.user.LoggedUser;
+import com.trade.auth.user.UserRepo;
+import com.trade.auth.user.model.UserEntity;
+import com.trade.exception.AuthException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

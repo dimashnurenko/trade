@@ -1,8 +1,9 @@
 package com.trade.web.image;
 
-import com.trade.common.exception.ServerException;
-import com.trade.domain.image.ImageStorage;
-import org.apache.log4j.Logger;
+import com.trade.core.domain.image.ImageStorage;
+import com.trade.exception.ServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Controller
 @RequestMapping("/api/v1/products/{productId}/images")
 public class ImagesController {
-	private final static Logger log = Logger.getLogger(ImagesController.class);
+	private final static Logger log = LoggerFactory.getLogger(ImagesController.class);
 
 	private final ImageStorage imageStorage;
 

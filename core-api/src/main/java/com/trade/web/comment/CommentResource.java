@@ -1,6 +1,6 @@
 package com.trade.web.comment;
 
-import com.trade.domain.comment.Comment;
+import com.trade.core.domain.comment.Comment;
 import org.springframework.hateoas.ResourceSupport;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;

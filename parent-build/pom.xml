@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
+        <version>1.5.7.RELEASE</version>
     </parent>
 
     <groupId>com.trade</groupId>
@@ -15,8 +15,61 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../auth</module>
         <module>../exceptions-support</module>
         <module>../core-api</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <mapstruct.version>1.1.0.Final</mapstruct.version>
+        <auth.version>0.0.1-SNAPSHOT</auth.version>
+        <guava.version>19.0</guava.version>
+        <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
+        <app.version>0.0.1-SNAPSHOT</app.version>
+        <hateous.version>1.2.2.RELEASE</hateous.version>
+        <spring.boot.version>2.2.0-RELEASE</spring.boot.version>
+        <spring.boot.starter.swagger>1.0.0</spring.boot.starter.swagger>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.trade</groupId>
+                <artifactId>exceptions-support</artifactId>
+                <version>${app.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.lxie</groupId>
+                <artifactId>spring-boot-starter-swagger</artifactId>
+                <version>${spring.boot.starter.swagger}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.tomcat</groupId>
+                        <artifactId>tomcat-jdbc</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

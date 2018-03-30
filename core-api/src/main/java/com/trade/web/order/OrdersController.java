@@ -1,8 +1,8 @@
 package com.trade.web.order;
 
-import com.trade.domain.order.Order;
-import com.trade.domain.order.OrderService;
-import com.trade.web.user.LoggedUser;
+import com.trade.core.domain.order.Order;
+import com.trade.core.domain.order.OrderService;
+import com.trade.web.config.LoggedUser;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

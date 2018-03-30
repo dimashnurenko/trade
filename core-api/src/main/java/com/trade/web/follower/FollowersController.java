@@ -1,7 +1,7 @@
 package com.trade.web.follower;
 
-import com.trade.domain.follower.FollowersService;
-import com.trade.web.user.LoggedUser;
+import com.trade.core.domain.follower.FollowersService;
+import com.trade.web.config.LoggedUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;

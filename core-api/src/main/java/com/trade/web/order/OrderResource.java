@@ -1,6 +1,6 @@
 package com.trade.web.order;
 
-import com.trade.domain.order.Order;
+import com.trade.core.domain.order.Order;
 import org.springframework.hateoas.ResourceSupport;
 
 public class OrderResource extends ResourceSupport {

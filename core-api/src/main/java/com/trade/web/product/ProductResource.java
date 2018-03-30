@@ -1,6 +1,6 @@
 package com.trade.web.product;
 
-import com.trade.domain.product.Product;
+import com.trade.core.domain.product.Product;
 import com.trade.web.image.ImagesController;
 import org.springframework.hateoas.ResourceSupport;
 

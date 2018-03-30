@@ -1,7 +1,7 @@
 package com.trade.web;
 
-import com.trade.common.exception.ServerException;
-import com.trade.common.exception.ValidationException;
+import com.trade.exception.ServerException;
+import com.trade.exception.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

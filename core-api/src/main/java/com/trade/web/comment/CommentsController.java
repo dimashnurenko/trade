@@ -1,8 +1,8 @@
 package com.trade.web.comment;
 
-import com.trade.domain.comment.Comment;
-import com.trade.domain.comment.CommentDto;
-import com.trade.domain.comment.CommentService;
+import com.trade.core.domain.comment.Comment;
+import com.trade.core.domain.comment.CommentDto;
+import com.trade.core.domain.comment.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
