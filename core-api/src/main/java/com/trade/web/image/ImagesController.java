@@ -1,7 +1,10 @@
 package com.trade.web.image;
 
 import com.trade.core.domain.image.ImageStorage;
-import com.trade.exception.ServerException;
+import com.trade.exception.BaseExceptionReason;
+import com.trade.exception.CoreAPIException;
+import com.trade.exception.client.ApiExceptionDetails;
+import com.trade.exception.client.ExceptionReason;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.trade.exception.BaseExceptionReason.SERVER_ERROR;
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -41,7 +46,7 @@ public class ImagesController {
 			imageStorage.store(productId, file.getBytes(), file.getOriginalFilename());
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
-			throw new ServerException(e.getMessage());
+			throw new CoreAPIException(SERVER_ERROR, exceptionDetails("image.store.error"));
 		}
 
 		return ok().build();

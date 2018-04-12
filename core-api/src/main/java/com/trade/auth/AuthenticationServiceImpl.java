@@ -5,7 +5,8 @@ import com.trade.auth.user.UserRepo;
 import com.trade.auth.token.AuthToken;
 import com.trade.auth.token.AuthTokenManager;
 import com.trade.auth.web.UserInfoDto;
-import com.trade.exception.AuthException;
+import com.trade.exception.client.ApiExceptionDetails;
+import com.trade.exception.client.BadAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 
 @Component(value = "authServiceCustom")
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -35,12 +38,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		String phone = dto.getPhone();
 		UserEntity user = userRepo.findFirstByPhone(phone);
 		if (user == null) {
-			throw new AuthException("Invalid credentials");
+			throw new BadAuthException(exceptionDetails("invalid.credentials"));
 		}
 
 		String password = dto.getPassword();
 		if (!passwordEncoder.matches(password, user.getPassword())) {
-			throw new AuthException("Invalid credentials");
+			throw new BadAuthException(exceptionDetails("invalid.credentials"));
 		}
 		return tokenManager.generateToken(user.getId());
 	}
@@ -52,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		               .map(AuthToken::getUserId)
 		               .map(userRepo::findOne)
 		               .map(UserInfoDto::new)
-		               .orElseThrow(() -> new AuthException("Token expired or invalid"));
+		               .orElseThrow(() -> new BadAuthException(exceptionDetails("token.expired.or.invalid")));
 	}
 
 	@Override

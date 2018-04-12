@@ -2,7 +2,7 @@ package com.trade.web.config;
 
 import com.trade.auth.user.UserRepo;
 import com.trade.auth.user.model.UserEntity;
-import com.trade.exception.AuthException;
+import com.trade.exception.client.BadAuthException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 
 public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 
@@ -32,13 +34,13 @@ public class LoggedUserResolver implements HandlerMethodArgumentResolver {
 	                              WebDataBinderFactory binderFactory) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!authentication.isAuthenticated()) {
-			throw new AuthException("User not authorized");
+			throw new BadAuthException(exceptionDetails("user.not.authorized"));
 		}
 
 		User principal = (User) authentication.getPrincipal();
 		UserEntity user = userRepo.findFirstByPhone(principal.getUsername());
 		if (user == null) {
-			throw new AuthException("User not authorized");
+			throw new BadAuthException(exceptionDetails("user.not.authorized"));
 		}
 
 		return new LoggedUser(user.getId());

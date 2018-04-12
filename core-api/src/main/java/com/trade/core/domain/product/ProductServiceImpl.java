@@ -4,8 +4,8 @@ import com.google.common.eventbus.EventBus;
 import com.trade.core.domain.feed.FeedEntity;
 import com.trade.core.domain.feed.FeedRepo;
 import com.trade.core.domain.follower.FollowersService;
+import com.trade.exception.CoreAPIException;
 import com.trade.exception.ResourceNotFoundException;
-import com.trade.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.trade.core.domain.events.product.ProductCreatedEvent.Builder.builder;
-import static java.lang.String.format;
+import static com.trade.exception.CoreExceptionReason.INCOMPATIBLE_DATA;
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -46,11 +47,12 @@ public class ProductServiceImpl implements ProductService {
 	public Product createProduct(ProductDto dto, Long feedId, Long userId) {
 		FeedEntity feedEntity = feedRepo.findOne(feedId);
 		if (feedEntity == null) {
-			throw new ResourceNotFoundException(feedId, "Feed");
+			throw new ResourceNotFoundException(exceptionDetails("resource.not.found",
+			                                                     new Object[]{"feed", feedId}));
 		}
 
 		if (!userId.equals(feedEntity.getUserId())) {
-			throw new ServerException(format("The feed %s doesn't belong to user %s", feedId, userId));
+			throw new CoreAPIException(INCOMPATIBLE_DATA, exceptionDetails("feed.not.belong.to.user", new Object[]{feedId, userId}));
 		}
 
 		ProductEntity entity = productMapper.toEntity(dto);
@@ -81,6 +83,6 @@ public class ProductServiceImpl implements ProductService {
 	public Product findById(Long id) {
 		return Optional.ofNullable(productRepo.findOne(id))
 		               .map(productMapper::toModel)
-		               .orElseThrow(() -> new ResourceNotFoundException(id, "product"));
+		               .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new Object[]{"product", id})));
 	}
 }

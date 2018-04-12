@@ -26,10 +26,11 @@
         <auth.version>0.0.1-SNAPSHOT</auth.version>
         <guava.version>19.0</guava.version>
         <spring.boot.version>2.0.0.RELEASE</spring.boot.version>
-        <app.version>0.0.1-SNAPSHOT</app.version>
+        <exception.support.version>0.0.2-SNAPSHOT</exception.support.version>
         <hateous.version>1.2.2.RELEASE</hateous.version>
         <spring.boot.version>2.2.0-RELEASE</spring.boot.version>
         <spring.boot.starter.swagger>1.0.0</spring.boot.starter.swagger>
+        <jackson.mapper.version>1.9.10</jackson.mapper.version>
     </properties>
 
     <dependencyManagement>
@@ -42,7 +43,7 @@
             <dependency>
                 <groupId>com.trade</groupId>
                 <artifactId>exceptions-support</artifactId>
-                <version>${app.version}</version>
+                <version>${exception.support.version}</version>
             </dependency>
             <dependency>
                 <groupId>xyz.lxie</groupId>
@@ -69,6 +70,11 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>${jackson.mapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

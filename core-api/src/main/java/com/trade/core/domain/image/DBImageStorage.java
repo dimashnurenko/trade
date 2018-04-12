@@ -1,12 +1,13 @@
 package com.trade.core.domain.image;
 
-import com.trade.exception.ServerException;
+import com.trade.exception.CoreAPIException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static java.lang.String.format;
+import static com.trade.exception.CoreExceptionReason.INCOMPATIBLE_DATA;
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 
 @Component
 public class DBImageStorage implements ImageStorage {
@@ -48,6 +49,6 @@ public class DBImageStorage implements ImageStorage {
 		if (productId.equals(imageBinary.getProductId())) {
 			return imageBinary.getData();
 		}
-		throw new ServerException(format("The image %s doesn't belong to product %s", imageId, productId));
+		throw new CoreAPIException(INCOMPATIBLE_DATA, exceptionDetails("image.incompatible.with.product", new Object[]{imageId, productId}));
 	}
 }

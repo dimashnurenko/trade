@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import static com.trade.auth.user.model.Role.USER;
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 
@@ -35,7 +36,7 @@ import static java.util.Collections.singletonList;
 	public User findOne(Long id) {
 		return Optional.ofNullable(userRepo.findOne(id))
 		               .map(mapper::toModel)
-		               .orElseThrow(() -> new ResourceNotFoundException(id, "user"));
+		               .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new Object[]{"user", id})));
 	}
 
 	@Override

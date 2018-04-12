@@ -4,8 +4,8 @@ import com.trade.auth.user.UserService;
 import com.trade.auth.user.model.User;
 import com.trade.core.domain.product.Product;
 import com.trade.core.domain.product.ProductService;
+import com.trade.exception.CoreAPIException;
 import com.trade.exception.ResourceNotFoundException;
-import com.trade.exception.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.trade.core.domain.comment.Comment.Builder.builder;
-import static com.trade.exception.ValidationErrorCodes.COMMENT_NOT_RELATED_TO_PROJECT;
+import static com.trade.exception.CoreExceptionReason.INCOMPATIBLE_DATA;
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -60,9 +61,10 @@ public class CommentServiceImpl implements CommentService {
 
 	private CommentEntity getCommentEntity(Long productId, Long commentId) {
 		CommentEntity commentEntity = Optional.ofNullable(commentsRepo.findOne(commentId))
-		                                      .orElseThrow(() -> new ResourceNotFoundException(commentId, "comment"));
+		                                      .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found",
+		                                                                                                        new Object[]{"comment", commentId})));
 		if (!productId.equals(commentEntity.getProductId())) {
-			throw new ValidationException(COMMENT_NOT_RELATED_TO_PROJECT, "Comment is not related to project");
+			throw new CoreAPIException(INCOMPATIBLE_DATA);
 		}
 		return commentEntity;
 	}

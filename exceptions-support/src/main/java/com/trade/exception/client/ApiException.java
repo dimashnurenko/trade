@@ -22,6 +22,10 @@ public class ApiException extends RuntimeException {
 		this(reason, Collections.emptyList(), new String[]{});
 	}
 
+	protected ApiException(ExceptionReason reason, String... args) {
+		this(reason, Collections.emptyList(), args);
+	}
+
 	public static ApiException apiException(ExceptionReason reason) {
 		return new ApiException(reason, Collections.emptyList());
 	}

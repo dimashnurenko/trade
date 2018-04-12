@@ -1,20 +1,18 @@
 package com.trade.auth.web;
 
-import com.trade.exception.AuthException;
 import com.trade.auth.AuthUserDto;
 import com.trade.auth.AuthenticationService;
 import com.trade.auth.token.AuthTokenDto;
-import com.trade.auth.user.model.User;
-import com.trade.auth.user.model.UserDto;
 import com.trade.auth.user.UserResource;
 import com.trade.auth.user.UserService;
 import com.trade.auth.user.UsersController;
+import com.trade.auth.user.model.User;
+import com.trade.auth.user.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +26,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.http.ResponseEntity.status;
@@ -71,10 +68,5 @@ public class AuthController {
 	public ResponseEntity logout(@RequestHeader(value = "Authentication") String token) {
 		authService.logout(token);
 		return status(OK).build();
-	}
-
-	@ExceptionHandler
-	public ResponseEntity handleAuthException(AuthException e) {
-		return ResponseEntity.status(UNAUTHORIZED).body(e.getMessage());
 	}
 }
