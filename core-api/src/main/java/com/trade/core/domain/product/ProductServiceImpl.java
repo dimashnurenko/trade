@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		if (!userId.equals(feedEntity.getUserId())) {
-			throw new CoreAPIException(INCOMPATIBLE_DATA, exceptionDetails("feed.not.belong.to.user", new Object[]{feedId, userId}));
+			throw new CoreAPIException(INCOMPATIBLE_DATA, exceptionDetails("feed.incompatible.with.user", new Object[]{feedId, userId}));
 		}
 
 		ProductEntity entity = productMapper.toEntity(dto);
