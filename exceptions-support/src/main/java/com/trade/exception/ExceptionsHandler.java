@@ -4,7 +4,6 @@ import com.trade.exception.client.ApiException;
 import com.trade.exception.response.ApiExceptionResponse;
 import com.trade.exception.response.ApiExceptionResponseCreator;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,12 +27,5 @@ public class ExceptionsHandler {
 		return ResponseEntity.status(ex.getReason().httpStatus())
 		                     .contentType(APPLICATION_JSON)
 		                     .body(responseCreator.create());
-	}
-
-	@ExceptionHandler(value = {Exception.class})
-	public ResponseEntity<StackTraceElement[]> handleException(Exception ex) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                     .contentType(APPLICATION_JSON)
-		                     .body(ex.getStackTrace());
 	}
 }
