@@ -10,10 +10,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class ProductResource extends ResourceSupport {
 	private final Product product;
 
-	public ProductResource(Product product, Long feedId) {
+	public ProductResource(Product product) {
 		this.product = product;
 
-		add(linkTo(methodOn(ProductsController.class).createProduct(null, feedId, null)).withRel("feed-products"));
 		add(linkTo(methodOn(ImagesController.class).upload(product.getId(), null)).withRel("upload-image"));
 		add(linkTo(methodOn(ImagesController.class).images(product.getId())).withRel("product-images"));
 	}
