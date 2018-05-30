@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,7 +26,10 @@ import static com.trade.exception.BaseExceptionReason.SERVER_ERROR;
 import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
 @Controller
@@ -39,7 +44,7 @@ public class ImagesController {
 		this.imageStorage = imageStorage;
 	}
 
-	@PostMapping
+	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity upload(@PathVariable Long productId,
 	                             @RequestParam("image") MultipartFile file) {
 		try {
@@ -59,8 +64,9 @@ public class ImagesController {
 		return ok(resources);
 	}
 
-	@GetMapping(path = "/{imageId}", produces = IMAGE_JPEG_VALUE)
+	@GetMapping(path = "/{imageId}")
 	public ResponseEntity<byte[]> image(@PathVariable Long productId, @PathVariable Long imageId) {
-		return ok(imageStorage.findImage(productId, imageId));
+		byte[] image = imageStorage.findImage(productId, imageId);
+		return ok().contentType(IMAGE_JPEG).body(image);
 	}
 }

@@ -24,17 +24,20 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductMapper productMapper;
 	private final FeedService feedService;
 	private final FollowersService followersService;
+	private final ProductDataProvider productDataProvider;
 	private final EventBus eventBus;
 
 	public ProductServiceImpl(ProductRepo productRepo,
 	                          ProductMapper productMapper,
 	                          FeedService feedService,
 	                          FollowersService followersService,
+	                          ProductDataProvider productDataProvider,
 	                          EventBus eventBus) {
 		this.productRepo = productRepo;
 		this.productMapper = productMapper;
 		this.feedService = feedService;
 		this.followersService = followersService;
+		this.productDataProvider = productDataProvider;
 		this.eventBus = eventBus;
 	}
 
@@ -66,7 +69,13 @@ public class ProductServiceImpl implements ProductService {
 		                              .map(FeedEntity::getId)
 		                              .collect(toList());
 		Page<ProductEntity> entities = productRepo.findAllByFeedIdInOrderByCreatedDate(feeds, pageable);
-		return entities.map(productMapper::toModel);
+		return entities.map(this::toProductModel);
+	}
+
+	private Product toProductModel(ProductEntity entity) {
+		Product product = productMapper.toModel(entity);
+		product.setDefaultImageId(productDataProvider.mainImageId(entity.getId()));
+		return product;
 	}
 
 	@Override

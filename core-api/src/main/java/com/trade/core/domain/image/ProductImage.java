@@ -17,6 +17,9 @@ public class ProductImage {
 	@Column(name = "product_id")
 	private Long productId;
 
+	@Column
+	private boolean main = false;
+
 	public Long getId() {
 		return id;
 	}
@@ -39,5 +42,13 @@ public class ProductImage {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+	}
+
+	public boolean isMain() {
+		return main;
+	}
+
+	public void setMain(boolean main) {
+		this.main = main;
 	}
 }

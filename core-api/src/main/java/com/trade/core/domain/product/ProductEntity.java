@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static com.trade.core.domain.product.ProductStatus.NEW;
 import static javax.persistence.EnumType.STRING;
@@ -34,18 +33,12 @@ public class ProductEntity extends CreateAudit {
 	@Column
 	private BigDecimal price;
 
-	@Column(name = "default_image_id")
-	private Long defaultImageId;
-
 	@Column
 	@Enumerated(value = STRING)
 	private ProductStatus status = NEW;
 
 	@Column(name = "feed_id")
 	private Long feedId;
-
-	@Column(name = "created_date")
-	private LocalDateTime createdDate;
 
 	public Long getId() {
 		return id;
@@ -79,14 +72,6 @@ public class ProductEntity extends CreateAudit {
 		this.price = price;
 	}
 
-	public Long getDefaultImageId() {
-		return defaultImageId;
-	}
-
-	public void setDefaultImageId(Long defaultImageId) {
-		this.defaultImageId = defaultImageId;
-	}
-
 	public ProductStatus getStatus() {
 		return status;
 	}
@@ -101,13 +86,5 @@ public class ProductEntity extends CreateAudit {
 
 	public void setFeedId(Long feedId) {
 		this.feedId = feedId;
-	}
-
-	public LocalDateTime getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
 	}
 }

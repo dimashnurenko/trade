@@ -24,6 +24,7 @@ public class DBImageStorage implements ImageStorage {
 	public void store(Long productId, byte[] imageBytes, String imageName) {
 		ProductImage productImage = new ProductImage();
 		productImage.setProductId(productId);
+		productImage.setMain(true);
 //		productImage.setUrl(); todo upload to s3
 
 		imageRepo.save(productImage);
@@ -45,7 +46,8 @@ public class DBImageStorage implements ImageStorage {
 	@Override
 	@Transactional(readOnly = true)
 	public byte[] findImage(Long productId, Long imageId) {
-		ProductImageBinary imageBinary = imageBinaryRepo.findOne(imageId);
+		ProductImage image = imageRepo.findOne(imageId);
+		ProductImageBinary imageBinary = imageBinaryRepo.findOneByProductImageId(image.getId());
 		if (productId.equals(imageBinary.getProductId())) {
 			return imageBinary.getData();
 		}
