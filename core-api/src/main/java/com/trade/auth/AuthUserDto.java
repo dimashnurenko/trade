@@ -4,6 +4,14 @@ public class AuthUserDto {
 	private String phone;
 	private String password;
 
+	public AuthUserDto() {
+	}
+
+	public AuthUserDto(String phone, String password) {
+		this.phone = phone;
+		this.password = password;
+	}
+
 	public String getPhone() {
 		return phone;
 	}
