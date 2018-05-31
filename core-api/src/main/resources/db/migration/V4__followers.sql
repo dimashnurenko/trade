@@ -1,4 +1,4 @@
-CREATE TABLE followers (
+CREATE TABLE IF NOT EXISTS followers (
   id          BIGINT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   user_id     BIGINT(10) NOT NULL,
   followed_on BIGINT(10) NOT NULL

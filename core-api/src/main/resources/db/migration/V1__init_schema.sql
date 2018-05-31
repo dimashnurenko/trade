@@ -1,4 +1,4 @@
-CREATE TABLE `product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `id`               BIGINT(10)  NOT NULL AUTO_INCREMENT,
   `title`            VARCHAR(50),
   `description`      VARCHAR(1000),
@@ -11,7 +11,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id`       BIGINT(10)   NOT NULL AUTO_INCREMENT,
   `name`     VARCHAR(150) NOT NULL,
   `phone`    VARCHAR(150) NOT NULL UNIQUE,
@@ -19,34 +19,34 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `product_image` (
+CREATE TABLE IF NOT EXISTS `product_image` (
   `id`         BIGINT(10)   NOT NULL AUTO_INCREMENT,
   `url`        VARCHAR(200) NOT NULL,
   `product_id` BIGINT(10)   NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `product_tag` (
+CREATE TABLE IF NOT EXISTS `product_tag` (
   `id`   BIGINT(10)  NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `product_tag_mapping` (
+CREATE TABLE IF NOT EXISTS `product_tag_mapping` (
   `id`         BIGINT(10) NOT NULL AUTO_INCREMENT,
   `tag_id`     BIGINT(10) NOT NULL,
   `product_id` BIGINT(10) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `user_role` (
+CREATE TABLE IF NOT EXISTS `user_role` (
   `id`      BIGINT(10)  NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(10)  NOT NULL,
   `role`    VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `comments` (
+CREATE TABLE IF NOT EXISTS `comments` (
   `id`           BIGINT(10) NOT NULL AUTO_INCREMENT,
   `created_date` DATETIME   NOT NULL,
   `updated_date` DATETIME   NOT NULL,
@@ -58,13 +58,13 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `feed` (
+CREATE TABLE IF NOT EXISTS `feed` (
   `id`      BIGINT(10) NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(10) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `feed_settings` (
+CREATE TABLE IF NOT EXISTS `feed_settings` (
   `id`                  BIGINT(10) NOT NULL AUTO_INCREMENT,
   `page_products_count` INT(3)     NOT NULL,
   `feed_id`             BIGINT(10) NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE `product_image_binary` (
+CREATE TABLE IF NOT EXISTS  `product_image_binary` (
   id               BIGINT(10) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   product_image_id BIGINT(10)             NOT NULL,
   product_id       BIGINT(10)             NOT NULL,

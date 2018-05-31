@@ -1,4 +1,4 @@
-CREATE TABLE auth_token (
+CREATE TABLE IF NOT EXISTS auth_token (
   id              BIGINT(10) AUTO_INCREMENT NOT NULL,
   token           VARCHAR(100),
   expiration_date DATETIME                  NOT NULL,

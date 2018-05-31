@@ -1,4 +1,4 @@
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
   id           BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
   product_id   BIGINT(10)  NOT NULL,
   quantity     INT         NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE orders (
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_fk1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
-CREATE TABLE order_summary (
+CREATE TABLE IF NOT EXISTS order_summary (
   id       BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
   order_id BIGINT(10)     NOT NULL,
   price    DECIMAL(10, 2) NULL,
@@ -21,7 +21,7 @@ CREATE TABLE order_summary (
 ALTER TABLE `order_summary`
   ADD CONSTRAINT `order_summary_fk1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
-CREATE TABLE recipients (
+CREATE TABLE IF NOT EXISTS recipients (
   id         BIGINT(10) PRIMARY KEY AUTO_INCREMENT,
   order_id   BIGINT(10),
   first_name VARCHAR(30),
