@@ -1,11 +1,10 @@
 package com.trade.auth;
 
-import com.trade.auth.user.model.UserEntity;
-import com.trade.auth.user.UserRepo;
 import com.trade.auth.token.AuthToken;
 import com.trade.auth.token.AuthTokenManager;
+import com.trade.auth.user.UserRepo;
+import com.trade.auth.user.model.UserEntity;
 import com.trade.auth.web.UserInfoDto;
-import com.trade.exception.client.ApiExceptionDetails;
 import com.trade.exception.client.BadAuthException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,7 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public UserInfoDto authenticate(String token) {
 		return Optional.ofNullable(tokenManager.get(token))
 		               .map(AuthToken::getUserId)
-		               .map(userRepo::findOne)
+		               .map(userRepo::findById)
+		               .map(Optional::get)
 		               .map(UserInfoDto::new)
 		               .orElseThrow(() -> new BadAuthException(exceptionDetails("token.expired.or.invalid")));
 	}

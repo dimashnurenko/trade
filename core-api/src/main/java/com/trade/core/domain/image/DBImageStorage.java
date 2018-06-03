@@ -1,6 +1,7 @@
 package com.trade.core.domain.image;
 
 import com.trade.exception.CoreAPIException;
+import com.trade.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,8 @@ public class DBImageStorage implements ImageStorage {
 	@Override
 	@Transactional(readOnly = true)
 	public byte[] findImage(Long productId, Long imageId) {
-		ProductImage image = imageRepo.findOne(imageId);
+		ProductImage image = imageRepo.findById(imageId)
+		                              .orElseThrow(()->new ResourceNotFoundException());
 		ProductImageBinary imageBinary = imageBinaryRepo.findOneByProductImageId(image.getId());
 		if (productId.equals(imageBinary.getProductId())) {
 			return imageBinary.getData();

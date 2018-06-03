@@ -5,8 +5,6 @@ import com.trade.core.domain.order.summary.SummaryService;
 import com.trade.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 
 @Component
@@ -27,9 +25,9 @@ public class OrderDetailsProvider {
 	}
 
 	public Order findOne(Long orderId) {
-		OrderEntity orderEntity = Optional.ofNullable(orderRepo.findOne(orderId))
-		                                  .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found",
-		                                                                                                    new Object[]{"order", orderId})));
+		OrderEntity orderEntity = orderRepo.findById(orderId)
+		                                   .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found",
+		                                                                                                     new Object[]{"order", orderId})));
 
 		Order order = mapper.toModel(orderEntity);
 		order.setSummary(summaryService.findOneByOrderId(orderId));

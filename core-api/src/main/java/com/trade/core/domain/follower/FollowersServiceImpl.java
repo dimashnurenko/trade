@@ -1,6 +1,7 @@
 package com.trade.core.domain.follower;
 
 import com.trade.exception.CoreAPIException;
+import com.trade.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,9 @@ public class FollowersServiceImpl implements FollowersService {
 	@Override
 	@Transactional
 	public void unFollow(Long userId, Long followedOn) {
-		FollowerEntity follower = followersRepo.findOne(followedOn);
+		FollowerEntity follower = followersRepo.findById(followedOn)
+		                                       .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found",
+		                                                                                                         new Object[]{"follower", followedOn})));
 		if (userId.equals(follower.getUserId())) {
 			followersRepo.delete(follower);
 		}

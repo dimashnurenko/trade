@@ -8,6 +8,8 @@ import com.trade.core.domain.events.order.OrderCreatedEvent;
 import com.trade.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
+import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
+
 @Component("createOrderHandlerRecipient")
 public class CreateOrderHandler {
 
@@ -23,7 +25,8 @@ public class CreateOrderHandler {
 
 	@Subscribe
 	public void onOrderCreated(OrderCreatedEvent event) {
-		UserEntity user = userRepo.findOne(event.getCustomerId());
+		UserEntity user = userRepo.findById(event.getCustomerId())
+		                          .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new String[]{"user"})));
 
 		RecipientEntity recipient = new RecipientEntity();
 		recipient.setPhone(user.getPhone());

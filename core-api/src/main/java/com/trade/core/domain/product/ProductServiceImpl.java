@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.trade.core.domain.events.product.ProductCreatedEvent.Builder.builder;
 import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
@@ -81,8 +80,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public Product findById(Long id) {
-		return Optional.ofNullable(productRepo.findOne(id))
-		               .map(productMapper::toModel)
-		               .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new Object[]{"product", id})));
+		return productRepo.findById(id)
+		                  .map(productMapper::toModel)
+		                  .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new Object[]{"product", id})));
 	}
 }

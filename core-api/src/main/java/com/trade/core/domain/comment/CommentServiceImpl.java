@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.trade.core.domain.comment.Comment.Builder.builder;
 import static com.trade.exception.CoreExceptionReason.INCOMPATIBLE_DATA;
-import static com.trade.exception.client.ApiExceptionDetails.exceptionDetails;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -60,9 +58,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	private CommentEntity getCommentEntity(Long productId, Long commentId) {
-		CommentEntity commentEntity = Optional.ofNullable(commentsRepo.findOne(commentId))
-		                                      .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found",
-		                                                                                                        new Object[]{"comment", commentId})));
+		CommentEntity commentEntity = commentsRepo.findById(commentId)
+		                                          .orElseThrow(() -> new ResourceNotFoundException("comment", commentId));
 		if (!productId.equals(commentEntity.getProductId())) {
 			throw new CoreAPIException(INCOMPATIBLE_DATA);
 		}

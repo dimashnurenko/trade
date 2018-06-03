@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
+
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<Long> {
 	private final UserRepo repo;
@@ -20,16 +22,15 @@ public class SpringSecurityAuditorAware implements AuditorAware<Long> {
 		this.repo = repo;
 	}
 
-	public Long getCurrentAuditor() {
+	public Optional<Long> getCurrentAuditor() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication == null || !authentication.isAuthenticated()) {
-			return null;
+			return Optional.empty();
 		}
 
 		String phone = ((User) authentication.getPrincipal()).getUsername();
 
-		UserEntity user = repo.findFirstByPhone(phone);
-		return user == null ? null : user.getId();
+		return ofNullable(repo.findFirstByPhone(phone)).map(UserEntity::getId);
 	}
 }
