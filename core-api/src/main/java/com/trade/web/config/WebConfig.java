@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -37,6 +38,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		messageSource.setBasenames("classpath:i18n/common_exceptions");
 		messageSource.setDefaultEncoding(UTF_8.displayName());
 		return messageSource;
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("swagger-ui.html")
+		        .addResourceLocations("classpath:/META-INF/resources/");
+
+		registry.addResourceHandler("/webjars/**")
+		        .addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 
 	@Bean

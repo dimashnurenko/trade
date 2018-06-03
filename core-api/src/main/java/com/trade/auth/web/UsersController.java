@@ -1,5 +1,6 @@
-package com.trade.auth.user;
+package com.trade.auth.web;
 
+import com.trade.auth.user.UserService;
 import com.trade.auth.user.model.User;
 import com.trade.auth.user.model.UserDto;
 import org.springframework.hateoas.Link;

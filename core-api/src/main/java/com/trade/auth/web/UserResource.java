@@ -1,8 +1,9 @@
-package com.trade.auth.user;
+package com.trade.auth.web;
 
 import com.trade.auth.user.model.Role;
 import com.trade.auth.user.model.User;
 import com.trade.auth.user.model.UserRole;
+import com.trade.auth.web.UsersController;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.List;
