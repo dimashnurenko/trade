@@ -2,11 +2,11 @@ package com.trade.core.domain.tag
 
 import javax.persistence.*
 
-open class Tag(val name: String?, val productId: Long?) {
+open class Tag(var name: String?, var productId: Long?) {
 	constructor() : this(null, null)
 }
 
-open class TagDto(val name: String?, val productId: Long?) {
+open class TagDto(var name: String?, var productId: Long?) {
 	constructor() : this(null, null)
 }
 
@@ -14,10 +14,10 @@ open class TagDto(val name: String?, val productId: Long?) {
 @Table(name = "product_tag")
 open class TagEntity(@Id
                      @GeneratedValue
-                     val id: Long?,
+                     var id: Long?,
                      @Column
-                     val name: String?,
+                     var name: String?,
                      @Column(name = "product_id")
-                     val productId: Long?) {
+                     var productId: Long?) {
 	constructor() : this(null, null, null)
 }
