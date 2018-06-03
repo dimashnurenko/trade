@@ -1,7 +1,7 @@
 package com.trade.core.common.audit;
 
-import com.trade.auth.user.UserRepo;
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.UserRepo;
+import com.trade.core.domain.user.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

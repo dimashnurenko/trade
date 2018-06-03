@@ -1,6 +1,6 @@
-package com.trade.auth.user;
+package com.trade.core.domain.user;
 
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.model.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepo extends CrudRepository<UserEntity, Long> {

@@ -1,7 +1,7 @@
 package com.trade.core.domain.comment;
 
-import com.trade.auth.user.UserService;
-import com.trade.auth.user.model.User;
+import com.trade.core.domain.user.UserService;
+import com.trade.core.domain.user.model.User;
 import com.trade.core.domain.product.Product;
 import com.trade.core.domain.product.ProductService;
 import com.trade.exception.CoreAPIException;

@@ -1,4 +1,4 @@
-package com.trade.auth.user.events;
+package com.trade.core.domain.user.events;
 
 public class UserCreatedEvent {
 	private final Long userId;

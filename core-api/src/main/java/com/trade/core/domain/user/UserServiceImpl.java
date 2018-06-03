@@ -1,17 +1,17 @@
-package com.trade.auth.user;
+package com.trade.core.domain.user;
 
-import com.trade.auth.user.model.Role;
-import com.trade.auth.user.model.User;
-import com.trade.auth.user.model.UserDto;
-import com.trade.auth.user.model.UserEntity;
-import com.trade.auth.user.model.UserRole;
+import com.trade.core.domain.user.model.Role;
+import com.trade.core.domain.user.model.User;
+import com.trade.core.domain.user.model.UserDto;
+import com.trade.core.domain.user.model.UserEntity;
+import com.trade.core.domain.user.model.UserRole;
 import com.trade.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.trade.auth.user.model.Role.USER;
+import static com.trade.core.domain.user.model.Role.USER;
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 

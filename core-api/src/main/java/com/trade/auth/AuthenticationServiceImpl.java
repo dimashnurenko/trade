@@ -2,8 +2,8 @@ package com.trade.auth;
 
 import com.trade.auth.token.AuthToken;
 import com.trade.auth.token.AuthTokenManager;
-import com.trade.auth.user.UserRepo;
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.UserRepo;
+import com.trade.core.domain.user.model.UserEntity;
 import com.trade.auth.web.UserInfoDto;
 import com.trade.exception.client.BadAuthException;
 import org.springframework.beans.factory.annotation.Autowired;

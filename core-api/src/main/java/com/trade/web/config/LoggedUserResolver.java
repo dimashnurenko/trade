@@ -1,7 +1,7 @@
 package com.trade.web.config;
 
-import com.trade.auth.user.UserRepo;
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.UserRepo;
+import com.trade.core.domain.user.model.UserEntity;
 import com.trade.exception.client.BadAuthException;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

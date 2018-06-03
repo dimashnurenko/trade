@@ -1,6 +1,6 @@
 package com.trade.auth.web;
 
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.model.UserEntity;
 
 import java.util.List;
 

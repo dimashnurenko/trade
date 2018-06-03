@@ -2,8 +2,8 @@ package com.trade.core.domain.order.recipient;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.trade.auth.user.UserRepo;
-import com.trade.auth.user.model.UserEntity;
+import com.trade.core.domain.user.UserRepo;
+import com.trade.core.domain.user.model.UserEntity;
 import com.trade.core.domain.events.order.OrderCreatedEvent;
 import com.trade.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;

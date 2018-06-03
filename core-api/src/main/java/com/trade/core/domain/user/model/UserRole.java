@@ -1,4 +1,4 @@
-package com.trade.auth.user.model;
+package com.trade.core.domain.user.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

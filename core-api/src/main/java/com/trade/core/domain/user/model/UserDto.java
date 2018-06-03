@@ -1,22 +1,10 @@
-package com.trade.auth.user.model;
+package com.trade.core.domain.user.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class User {
-	private Long id;
+public class UserDto {
 	private String name;
+	private String email;
 	private String phone;
 	private String password;
-	private List<UserRole> roles = new ArrayList<>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -42,11 +30,11 @@ public class User {
 		this.password = password;
 	}
 
-	public List<UserRole> getRoles() {
-		return roles;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setRoles(List<UserRole> roles) {
-		this.roles = roles;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

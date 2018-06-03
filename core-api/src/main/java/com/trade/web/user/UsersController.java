@@ -1,8 +1,8 @@
-package com.trade.auth.web;
+package com.trade.web.user;
 
-import com.trade.auth.user.UserService;
-import com.trade.auth.user.model.User;
-import com.trade.auth.user.model.UserDto;
+import com.trade.core.domain.user.UserService;
+import com.trade.core.domain.user.model.User;
+import com.trade.core.domain.user.model.UserDto;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
