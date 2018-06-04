@@ -12,13 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "orders")
 @EntityListeners(AuditingEntityListener.class)
 public class OrderEntity extends CreateAudit {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
 	@Column(name = "product_id")

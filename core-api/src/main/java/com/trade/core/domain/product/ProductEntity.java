@@ -14,14 +14,15 @@ import java.math.BigDecimal;
 
 import static com.trade.core.domain.product.ProductStatus.NEW;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "product")
 @EntityListeners(AuditingEntityListener.class)
 public class ProductEntity extends CreateAudit {
 
-	@GeneratedValue
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
 	@Column

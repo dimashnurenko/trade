@@ -7,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "order_summary")
 public class OrderSummaryEntity {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@Column(name = "order_id")
 	private Long orderId;

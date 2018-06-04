@@ -6,11 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "product_image")
 public class ProductImage {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@Column
 	private String url = "";

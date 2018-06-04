@@ -9,11 +9,13 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "auth_token")
 public class AuthToken implements Serializable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@NotNull
 	@Column

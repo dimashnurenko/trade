@@ -6,11 +6,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "recipients")
 public class RecipientEntity {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@Column(name = "order_id")
 	private Long orderId;

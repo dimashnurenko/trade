@@ -7,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "followers")
 public class FollowerEntity {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	@NotNull
 	@Column(name = "user_id")

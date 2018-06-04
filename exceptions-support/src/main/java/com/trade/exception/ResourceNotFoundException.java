@@ -16,4 +16,8 @@ public class ResourceNotFoundException extends ApiException {
 	public ResourceNotFoundException(String resourceName, Long id) {
 		super(RESOURCE_NOT_FOUND, singletonList(ApiExceptionDetails.exceptionDetails("resource.not.found", new Object[]{resourceName, id})));
 	}
+
+	public ResourceNotFoundException(String resourceName, String id) {
+		super(RESOURCE_NOT_FOUND, singletonList(ApiExceptionDetails.exceptionDetails("resource.not.found", new Object[]{resourceName, id})));
+	}
 }

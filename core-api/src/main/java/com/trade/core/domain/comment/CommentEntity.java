@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "comments")
 @EntityListeners(AuditingEntityListener.class)
 public class CommentEntity extends Audit {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
 	@Column

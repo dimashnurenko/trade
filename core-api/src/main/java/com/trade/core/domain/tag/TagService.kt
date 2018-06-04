@@ -1,9 +1,15 @@
 package com.trade.core.domain.tag
 
 interface TagService {
-	fun createTag(productId: Long, tag: Tag): Tag
+	fun createTag(tag: TagDto): Tag
 
-	fun findProductsIdsByTagName(name: String): List<Long>
+	fun findTagByName(name: String): Tag
 
-	fun findTagsByProductId(productId: Long): List<String>
+	fun searchAllByName(name: String): List<Tag>
+
+	fun assignTagToProduct(productId: Long, tagId: Long)
+
+	fun findProductsIdsByTagId(tagId: Long): List<Long?>
+
+	fun findProductsIdsByTagName(tagName: String, userId: Long): List<Long?>
 }

@@ -11,12 +11,13 @@ import javax.persistence.Table;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "user_role")
 public class UserRole {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = IDENTITY)
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)

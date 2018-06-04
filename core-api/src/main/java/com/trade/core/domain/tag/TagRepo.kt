@@ -4,14 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
 interface TagRepo : JpaRepository<TagEntity, Long> {
-	private companion object {
-		const val productsIdsByTagName = "select product_id from tag_product where name=?"
-		const val tagsNamesByProductId = "select name from tag_product where product_id=?"
-	}
 
-	@Query(value = productsIdsByTagName, nativeQuery = true)
-	fun findProductsIdsByTagName(name: String): List<Long>
+	fun findOneByName(name: String): TagEntity?
 
-	@Query(value = tagsNamesByProductId, nativeQuery = true)
-	fun findTagsByProductId(productId: Long): List<String>
+	@Query("select t from TagEntity t where t.name like %:name%")
+	fun findAllWhereNameLike(name: String): List<TagEntity?>
 }

@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.trade.core.domain.feed.FeedEntity;
 import com.trade.core.domain.feed.FeedService;
 import com.trade.core.domain.follower.FollowersService;
+import com.trade.core.domain.tag.TagService;
 import com.trade.exception.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,19 +26,22 @@ public class ProductServiceImpl implements ProductService {
 	private final FollowersService followersService;
 	private final ProductDataProvider productDataProvider;
 	private final EventBus eventBus;
+	private final TagService tagService;
 
 	public ProductServiceImpl(ProductRepo productRepo,
 	                          ProductMapper productMapper,
 	                          FeedService feedService,
 	                          FollowersService followersService,
 	                          ProductDataProvider productDataProvider,
-	                          EventBus eventBus) {
+	                          EventBus eventBus,
+	                          TagService tagService) {
 		this.productRepo = productRepo;
 		this.productMapper = productMapper;
 		this.feedService = feedService;
 		this.followersService = followersService;
 		this.productDataProvider = productDataProvider;
 		this.eventBus = eventBus;
+		this.tagService = tagService;
 	}
 
 	@Override
@@ -83,5 +87,12 @@ public class ProductServiceImpl implements ProductService {
 		return productRepo.findById(id)
 		                  .map(productMapper::toModel)
 		                  .orElseThrow(() -> new ResourceNotFoundException(exceptionDetails("resource.not.found", new Object[]{"product", id})));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Product> findAllByTagName(String tagName, Long userId) {
+		List<Long> productsIds = tagService.findProductsIdsByTagName(tagName, userId);
+		return productRepo.findAllById(productsIds).stream().map(this::toProductModel).collect(toList());
 	}
 }

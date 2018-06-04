@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -39,5 +43,12 @@ public class ProductsController {
 	public ResponseEntity<Page<ProductResource>> findByUserId(LoggedUser loggedUser, Pageable pageable) {
 		Page<Product> products = productService.findAllByUserId(loggedUser.getId(), pageable);
 		return ok(products.map(ProductResource::new));
+	}
+
+	@GetMapping(path = "/search", produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ProductResource>> findAllByTagName(@RequestParam String tagName,
+	                                                              @ApiIgnore LoggedUser loggedUser) {
+		List<Product> products = productService.findAllByTagName(tagName, loggedUser.getId());
+		return ok(products.stream().map(ProductResource::new).collect(toList()));
 	}
 }
