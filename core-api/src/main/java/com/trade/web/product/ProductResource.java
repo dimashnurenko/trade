@@ -2,6 +2,7 @@ package com.trade.web.product;
 
 import com.trade.core.domain.product.Product;
 import com.trade.core.domain.product.ProductStatus;
+import com.trade.web.comment.CommentsController;
 import com.trade.web.image.ImagesController;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -30,8 +31,11 @@ public class ProductResource extends ResourceSupport {
 		this.defaultImageId = product.getDefaultImageId();
 		this.status = product.getStatus();
 
+		add(linkTo(methodOn(ProductsController.class).findByUserId(null, null)).withRel("users_products"));
+		add(linkTo(methodOn(ProductsController.class).findAllByTagName("tagName", null)).withRel("products_by_tag"));
 		add(linkTo(methodOn(ImagesController.class).upload(productId, null)).withRel("upload-image"));
 		add(linkTo(methodOn(ImagesController.class).images(productId)).withRel("product-images"));
+		add(linkTo(methodOn(CommentsController.class).findAllByProductId(productId)).withRel("product-comments"));
 		if (defaultImageId != null) {
 			add(linkTo(methodOn(ImagesController.class).image(productId, defaultImageId)).withRel("product-image"));
 		}

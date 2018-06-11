@@ -40,7 +40,7 @@ public class ProductsController {
 	}
 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<ProductResource>> findByUserId(LoggedUser loggedUser, Pageable pageable) {
+	public ResponseEntity<Page<ProductResource>> findByUserId(@ApiIgnore LoggedUser loggedUser, Pageable pageable) {
 		Page<Product> products = productService.findAllByUserId(loggedUser.getId(), pageable);
 		return ok(products.map(ProductResource::new));
 	}
