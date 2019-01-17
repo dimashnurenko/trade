@@ -21,6 +21,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/dimashnurenko/trade</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
